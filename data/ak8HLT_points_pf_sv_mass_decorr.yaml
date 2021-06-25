@@ -32,12 +32,12 @@ preprocess:
 
 inputs:
    pf_points:
-      length: 150
+      length: 120
       vars:
          - [jet_pfcand_deta, null]
          - [jet_pfcand_dphi, null]
    pf_features:
-      length: 150
+      length: 120
       vars:
          ### [format 1]: var_name (no transformation)
          ### [format 2]: [var_name,
@@ -71,7 +71,7 @@ inputs:
          - [jet_pfcand_nstriphits, 0, 0.1]
          - [jet_pfcand_puppiw, 0, 1]
    pf_mask:
-      length: 150
+      length: 120
       vars:
          - [pfcand_mask, null]
    sv_points:
