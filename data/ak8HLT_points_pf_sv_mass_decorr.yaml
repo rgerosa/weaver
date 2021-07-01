@@ -137,8 +137,6 @@ observers:
    - jet_recomatch_probQCD
    - jet_flav_2prong_quarkmatch_0p8
    - jet_flav_2prong_resonancematch_0p2
-   - jet_hflav
-   - jet_pflav
 
 monitor_variables:
 
