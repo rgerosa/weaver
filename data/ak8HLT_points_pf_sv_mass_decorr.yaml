@@ -109,10 +109,11 @@ labels:
 
 observers:
    - event
-   - rho
+   - rho_hlt
    - jet_pt
    - jet_eta
    - jet_phi
+   - jet_mass
    - jet_softdrop_mass
    - jet_softdrop_mass_raw
    - jet_hflav
@@ -120,14 +121,27 @@ observers:
    - jet_genmatch_pt
    - jet_genmatch_eta
    - jet_genmatch_phi
-   - jet_pnet_XbbvsQCD
-   - jet_pnet_XccvsQCD
-   - jet_pnet_XqqvsQCD
-   - jet_pnet_XbbvsAll
-   - jet_pnet_XccvsAll
-   - jet_pnet_XqqvsAll
+   - jet_genmatch_mass
+   - jet_doublebtag
+   - jet_pnet_probXbb
+   - jet_pnet_probXcc
+   - jet_pnet_probXqq
+   - jet_pnet_probQCD
+   - jet_recomatch_pt
+   - jet_recomatch_eta
+   - jet_recomatch_phi
+   - jet_recomatch_mass
+   - jet_recomatch_softdrop_mass
+   - jet_recomatch_softdrop_mass_raw
+   - jet_recomatch_doublebtag
+   - jet_recomatch_probXbb
+   - jet_recomatch_probXcc
+   - jet_recomatch_probXqq
+   - jet_recomatch_probQCD
    - jet_flav_2prong_quarkmatch_0p8
    - jet_flav_2prong_resonancematch_0p2
+   - jet_hflav
+   - jet_pflav
 
 monitor_variables:
 
