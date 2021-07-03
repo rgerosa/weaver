@@ -131,10 +131,10 @@ observers:
    - jet_recomatch_mass
    - jet_recomatch_softdrop_mass
    - jet_recomatch_doublebtag
-   - jet_recomatch_probXbb
-   - jet_recomatch_probXcc
-   - jet_recomatch_probXqq
-   - jet_recomatch_probQCD
+   - jet_recomatch_pnet_probXbb
+   - jet_recomatch_pnet_probXcc
+   - jet_recomatch_pnet_probXqq
+   - jet_recomatch_pnet_probQCD
    - jet_flav_2prong_quarkmatch_0p8
    - jet_flav_2prong_resonancematch_0p2
 
