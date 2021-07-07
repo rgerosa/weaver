@@ -20,8 +20,7 @@ new_variables:
    jet_sv_pt_log: np.log(jet_sv_pt)
    label_H_bb: jet_flav_2prong_quarkmatch_0p8==5
    label_H_cc: jet_flav_2prong_quarkmatch_0p8==4
-   label_H_qq: jet_flav_2prong_quarkmatch_0p8==1
-   label_H_gg: jet_flav_2prong_quarkmatch_0p8==0
+   label_H_qq_gg: jet_flav_2prong_quarkmatch_0p8==1 | jet_flav_2prong_quarkmatch_0p8==0 
    label_QCD:  jet_flav_2prong_quarkmatch_0p8==-1
 
 preprocess:
@@ -32,12 +31,12 @@ preprocess:
 
 inputs:
    pf_points:
-      length: 120
+      length: 150
       vars:
          - [jet_pfcand_deta, null]
          - [jet_pfcand_dphi, null]
    pf_features:
-      length: 120
+      length: 150
       vars:
          ### [format 1]: var_name (no transformation)
          ### [format 2]: [var_name,
@@ -70,7 +69,7 @@ inputs:
          - [jet_pfcand_npixhits, 0, 0.1]
          - [jet_pfcand_nstriphits, 0, 0.1]
    pf_mask:
-      length: 120
+      length: 150
       vars:
          - [pfcand_mask, null]
    sv_points:
@@ -101,7 +100,7 @@ labels:
    ### type can be `simple`, `custom`
    ### [option 1] use `simple` for binary/multi-class classification, then `value` is a list of 0-1 labels
    type: simple
-   value: [label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD]
+   value: [label_H_bb, label_H_cc, label_H_qq_gg, label_QCD]
    ### [option 2] otherwise use `custom` to define the label, then `value` is a map
    # type: custom
    # value:
@@ -150,7 +149,7 @@ weights:
    reweight_vars:
       jet_pt: [250, 316, 398, 501, 630, 793, 997, 1255, 1579, 1987, 2500]
       jet_softdrop_mass: [30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250]
-   reweight_classes: [label_QCD, label_H_bb, label_H_cc, label_H_qq, label_H_gg]
-   class_weights: [1, 1, 1, 1, 1]
+   reweight_classes: [label_QCD, label_H_bb, label_H_cc, label_H_qq_gg]
+   class_weights: [1, 1, 1, 1]
    reweight_threshold: 15
    reweight_hists:
