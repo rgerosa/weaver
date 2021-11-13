@@ -4,9 +4,9 @@ from utils.nn.model.ParticleNet import ParticleNetTagger
 
 def get_model(data_config, **kwargs):
     conv_params = [
-        (8, (64, 64, 64)),
-        (8, (96, 96, 96)),
-        (8, (128, 128, 128)),
+        (16, (64, 64, 64)),
+        (16, (96, 96, 96)),
+        (16, (128, 128, 128)),
         ]
     fc_params = [(128, 0.1)]
     use_fusion = True

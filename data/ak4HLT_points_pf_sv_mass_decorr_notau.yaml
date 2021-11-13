@@ -2,27 +2,21 @@ selection:
    ### use `&`, `|`, `~` for logical operations on numpy arrays
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    >-
-   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_softdrop_mass>30) & (jet_softdrop_mass<250) & (event%7!=0) 
-   & ( (gen_mass_h==0) | ( (gen_mass_h>0) & (jet_flav_2prong_quarkmatch_0p8!=-1) ))
+   (np.abs(jet_eta)<2.5) & (jet_pt>30) & (jet_pt<1000) & (event%7!=0) & (jet_genmatch_pt>0) & (jet_tauflav==0)
 
 test_time_selection:
    >-
-   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_softdrop_mass>30) & (jet_softdrop_mass<250) & (event%7==0)
-   & ( (gen_mass_h==0) | ( (gen_mass_h>0) & (jet_flav_2prong_quarkmatch_0p8!=-1) ))
+   (np.abs(jet_eta)<2.5) & (jet_pt>30) & (jet_pt<1000) & (event%7==0) & (jet_genmatch_pt>0) & (jet_tauflav==0)
 
 new_variables:
    ### [format] name: formula
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    pfcand_mask: awkward.JaggedArray.ones_like(jet_pfcand_deta)
    sv_mask: awkward.JaggedArray.ones_like(jet_sv_deta)
-   jet_pfcand_pt_log: np.log(jet_pfcand_pt)
-   jet_pfcand_energy_log: np.log(jet_pfcand_energy)
-   jet_sv_pt_log: np.log(jet_sv_pt)
-   label_H_bb: jet_flav_2prong_quarkmatch_0p8==5
-   label_H_cc: jet_flav_2prong_quarkmatch_0p8==4
-   label_H_qq: jet_flav_2prong_quarkmatch_0p8==1
-   label_H_gg: jet_flav_2prong_quarkmatch_0p8==0
-   label_QCD:  jet_flav_2prong_quarkmatch_0p8==-1
+   label_b: jet_hflav==5
+   label_c: jet_hflav==4
+   label_uds: (jet_hflav==0) & (np.abs(jet_pflav) < 4)
+   label_g: (jet_hflav==0) & (np.abs(jet_pflav) == 21)
 
 preprocess:
    ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
@@ -32,20 +26,20 @@ preprocess:
 
 inputs:
    pf_points:
-      length: 150
+      length: 50
       vars:
          - [jet_pfcand_deta, null]
          - [jet_pfcand_dphi, null]
    pf_features:
-      length: 150
+      length: 50
       vars:
          ### [format 1]: var_name (no transformation)
          ### [format 2]: [var_name,
-         ###              subtract_by(optional, default=None, no transf. if preprocess.method=manual, auto transf. if preprocess.method=auto),
-         ###              multiply_by(optional, default=1),
-         ###              clip_min(optional, default=-5),
-         ###              clip_max(optional, default=5),
-         ###              pad_value(optional, default=0)]
+         ### subtract_by(optional, default=None, no transf. if preprocess.method=manual, auto transf. if preprocess.method=auto),
+         ### multiply_by(optional, default=1),
+         ### clip_min(optional, default=-5),
+         ### clip_max(optional, default=5),
+         ### pad_value(optional, default=0)]
          - [jet_pfcand_pt_log, 1, 0.5]
          - [jet_pfcand_energy_log, 1.3, 0.5]
          - [jet_pfcand_deta, null]
@@ -69,18 +63,17 @@ inputs:
          - [jet_pfcand_trackjet_decayL, 0, 65]
          - [jet_pfcand_npixhits, 0, 0.1]
          - [jet_pfcand_nstriphits, 0, 0.1]
-         - [jet_pfcand_puppiw, null]
    pf_mask:
-      length: 150
+      length: 50
       vars:
          - [pfcand_mask, null]
    sv_points:
-      length: 10
+      length: 5
       vars:
          - [jet_sv_deta, null]
          - [jet_sv_dphi, null]
    sv_features:
-      length: 10
+      length: 5
       vars:
          - [jet_sv_pt_log, 4, 0.6]
          - [jet_sv_mass, 1.2, 0.3]
@@ -94,7 +87,7 @@ inputs:
          - [jet_sv_d3d, 0.5, 0.2]
          - [jet_sv_d3dsig, 7, 0.02]
    sv_mask:
-      length: 10
+      length: 5
       vars:
          - [sv_mask, null]
 
@@ -102,7 +95,7 @@ labels:
    ### type can be `simple`, `custom`
    ### [option 1] use `simple` for binary/multi-class classification, then `value` is a list of 0-1 labels
    type: simple
-   value: [label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD]
+   value: [label_b, label_c, label_uds, label_g]
    ### [option 2] otherwise use `custom` to define the label, then `value` is a map
    # type: custom
    # value:
@@ -110,34 +103,41 @@ labels:
 observers:
    - event
    - rho
+   - npv
+   - wgt
+   - met
    - jet_pt
    - jet_eta
    - jet_phi
    - jet_mass
-   - jet_softdrop_mass
    - jet_hflav
    - jet_pflav
    - jet_genmatch_pt
    - jet_genmatch_eta
    - jet_genmatch_phi
    - jet_genmatch_mass
-   - jet_doublebtag
-   - jet_pnet_probXbb
-   - jet_pnet_probXcc
-   - jet_pnet_probXqq
-   - jet_pnet_probQCD
+   - jet_deepcsv_bvsall
+   - jet_deepcsv_bvsc
+   - jet_deepcsv_bvsqg
+   - jet_pnet_bvsall
+   - jet_pnet_bvsc
+   - jet_pnet_bvsqg
+   - jet_pnethlt_bvsall
+   - jet_pnethlt_bvsc
+   - jet_pnethlt_bvsqg   
+   - jet_pnethlt_bvsall
+   - jet_pnetlitehlt_bvsc
+   - jet_pnetlitehlt_bvsqg
    - jet_recomatch_pt
    - jet_recomatch_eta
    - jet_recomatch_phi
    - jet_recomatch_mass
-   - jet_recomatch_softdrop_mass
-   - jet_recomatch_doublebtag
-   - jet_recomatch_pnet_probXbb
-   - jet_recomatch_pnet_probXcc
-   - jet_recomatch_pnet_probXqq
-   - jet_recomatch_pnet_probQCD
-   - jet_flav_2prong_quarkmatch_0p8
-   - jet_flav_2prong_resonancematch_0p2
+   - jet_recomatch_deepcsv_bvsall
+   - jet_recomatch_deepcsv_bvsc
+   - jet_recomatch_deepcsv_bvsqg
+   - jet_recomatch_pnet_bvsall
+   - jet_recomatch_pnet_bvsc
+   - jet_recomatch_pnet_bvsqg
 
 monitor_variables:
 
@@ -149,9 +149,9 @@ weights:
    use_precomputed_weights: false
    reweight_method: flat
    reweight_vars:
-      jet_pt: [250, 316, 398, 501, 630, 793, 997, 1255, 1579, 1987, 2500]
-      jet_softdrop_mass: [30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250]
-   reweight_classes: [label_QCD, label_H_bb, label_H_cc, label_H_qq, label_H_gg]
-   class_weights: [1, 1, 1, 1, 1]
+      jet_pt: [30, 35, 45, 60, 80, 105, 145, 190, 250, 330, 430, 570, 760, 1000]
+      jet_eta: [-2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5]
+   reweight_classes: [label_b, label_c, label_uds, label_g]
+   class_weights: [1, 1, 1, 1]
    reweight_threshold: 15
    reweight_hists:
