@@ -2,23 +2,22 @@ selection:
    ### use `&`, `|`, `~` for logical operations on numpy arrays
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    >-
-   (np.abs(jet_eta)<2.5) & (jet_pt>30) & (jet_pt<1000) & (event%7!=0) & (jet_genmatch_pt>0)
+   (np.abs(jet_eta)<2.5) & (jet_pt>30) & (jet_pt<1000) & (event%7!=0) & (jet_genmatch_pt>0) & (jet_tauflav==0)
 
 test_time_selection:
    >-
-   (np.abs(jet_eta)<2.5) & (jet_pt>30) & (jet_pt<1000) & (event%7==0) & (jet_genmatch_pt>0)
+   (np.abs(jet_eta)<2.5) & (jet_pt>30) & (jet_pt<1000) & (event%7==0) & (jet_genmatch_pt>0) & (jet_tauflav==0)
 
 new_variables:
    ### [format] name: formula
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    pfcand_mask: awkward.JaggedArray.ones_like(jet_pfcand_deta)
    sv_mask: awkward.JaggedArray.ones_like(jet_sv_deta)
-   label_b: (jet_tauflav==0) & (jet_hflav==5)
-   label_c: (jet_tauflav==0) & (jet_hflav==4)
-   label_uds: (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)<4)
-   label_g: (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)==21)
-   label_tau: (jet_tauflav==1)
-   
+   label_b: jet_hflav==5
+   label_c: jet_hflav==4
+   label_uds: (jet_hflav==0) & (np.abs(jet_pflav) < 4)
+   label_g: (jet_hflav==0) & (np.abs(jet_pflav) == 21)
+
 preprocess:
    ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
    method: manual
@@ -96,7 +95,7 @@ labels:
    ### type can be `simple`, `custom`
    ### [option 1] use `simple` for binary/multi-class classification, then `value` is a list of 0-1 labels
    type: simple
-   value: [label_tau, label_b, label_c, label_uds, label_g]
+   value: [label_b, label_c, label_uds, label_g]
    ### [option 2] otherwise use `custom` to define the label, then `value` is a map
    # type: custom
    # value:
@@ -129,8 +128,6 @@ observers:
    - jet_pnethlt_bvsall
    - jet_pnetlitehlt_bvsc
    - jet_pnetlitehlt_bvsqg
-   - jet_tauflav
-   - jet_taudecaymode
    - jet_recomatch_pt
    - jet_recomatch_eta
    - jet_recomatch_phi
@@ -141,7 +138,7 @@ observers:
    - jet_recomatch_pnet_bvsall
    - jet_recomatch_pnet_bvsc
    - jet_recomatch_pnet_bvsqg
-   
+
 monitor_variables:
 
 weights:
@@ -154,7 +151,7 @@ weights:
    reweight_vars:
       jet_pt: [30, 35, 45, 60, 80, 105, 145, 190, 250, 330, 430, 570, 760, 1000]
       jet_eta: [-2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5]
-   reweight_classes: [label_tau, label_b, label_c, label_uds, label_g]
-   class_weights: [1, 1, 1, 1, 1]
+   reweight_classes: [label_b, label_c, label_uds, label_g]
+   class_weights: [1, 1, 1, 1]
    reweight_threshold: 15
    reweight_hists:
