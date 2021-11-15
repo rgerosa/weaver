@@ -2,13 +2,13 @@ selection:
    ### use `&`, `|`, `~` for logical operations on numpy arrays
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    >-
-   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>30) & (jet_mass_truth<250) & (event%7!=0) 
-   & ( (sample_type==0) | ( (sample_type>0) & (jet_flav_2prong_partonjet_match_b!=-1) ))
+   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>30) & (jet_mass_truth<250) & (event%7!=0) & 
+   ((sample_type==0) | ((sample_type>0) & (jet_flav_2prong_partonjet_match_b!=-1)))
 
 test_time_selection:
    >-
-   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>30) & (jet_mass_truth<250) & (event%7==0) 
-   & ( (sample_type==0) | ( (sample_type>0) & (jet_flav_2prong_partonjet_match_b!=-1) ))
+   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>30) & (jet_mass_truth<250) & (event%7==0) &
+   ((sample_type==0) | ((sample_type>0) & (jet_flav_2prong_partonjet_match_b!=-1)))
 
 new_variables:
    ### [format] name: formula
@@ -20,7 +20,7 @@ new_variables:
    label_H_cc: jet_flav_2prong_partonjet_match_b==6
    label_H_qq: jet_flav_2prong_partonjet_match_b==5
    label_H_gg: jet_flav_2prong_partonjet_match_b==4
-   label_QCD:  (jet_flav_2prong_partonjet_match_b==-1)   
+   label_QCD:  jet_flav_2prong_partonjet_match_b==-1   
 
 preprocess:
    ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
