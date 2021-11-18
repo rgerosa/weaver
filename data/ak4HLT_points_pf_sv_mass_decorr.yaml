@@ -106,6 +106,7 @@ observers:
    - npv
    - wgt
    - met
+   - sample
    - jet_pt
    - jet_eta
    - jet_phi

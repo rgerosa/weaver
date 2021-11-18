@@ -3,12 +3,12 @@ selection:
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    >-
    (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>30) & (jet_mass_truth<250) & (event%7!=0) &
-   ((sample_type==0) | ((sample_type>0) & (jet_flav_2prong_partonjet_match_b!=-1)))
+   ((sample==0) | ((sample>0) & (jet_flav_2prong_partonjet_match_b!=-1)))
 
 test_time_selection:
    >-
    (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>30) & (jet_mass_truth<250) & (event%7==0) &
-   ((sample_type==0) | ((sample_type>0) & (jet_flav_2prong_partonjet_match_b!=-1)))
+   ((sample==0) | ((sample>0) & (jet_flav_2prong_partonjet_match_b!=-1)))
 
 new_variables:
    ### [format] name: formula
@@ -111,7 +111,7 @@ observers:
    - npv
    - met
    - wgt
-   - sample_type
+   - sample
    - jet_pt
    - jet_eta
    - jet_phi
