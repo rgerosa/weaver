@@ -119,9 +119,13 @@ observers:
    - jet_genmatch_mass
    - jet_deepcsv_bvsall
    - jet_deepcsv_bvsc
+   - jet_deepcsv_bvsq
+   - jet_deepcsv_bvsg
    - jet_deepcsv_bvsqg
    - jet_pnet_bvsall
    - jet_pnet_bvsc
+   - jet_pnet_bvsq
+   - jet_pnet_bvsg
    - jet_pnet_bvsqg
    
 monitor_variables:

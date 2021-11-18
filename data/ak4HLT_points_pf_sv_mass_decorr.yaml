@@ -119,25 +119,37 @@ observers:
    - jet_genmatch_mass
    - jet_deepcsv_bvsall
    - jet_deepcsv_bvsc
+   - jet_deepcsv_bvsq
+   - jet_deepcsv_bvsg
    - jet_deepcsv_bvsqg
    - jet_pnet_bvsall
    - jet_pnet_bvsc
+   - jet_pnet_bvsq
+   - jet_pnet_bvsg
    - jet_pnet_bvsqg
    - jet_pnethlt_bvsall
    - jet_pnethlt_bvsc
+   - jet_pnethlt_bvsq   
+   - jet_pnethlt_bvsg   
    - jet_pnethlt_bvsqg   
    - jet_pnethlt_bvsall
-   - jet_pnetlitehlt_bvsc
-   - jet_pnetlitehlt_bvsqg
+   - jet_pnethlt_bvsc
+   - jet_pnethlt_bvsqg
+   - jet_pnethlt_bvsq
+   - jet_pnethlt_bvsg
    - jet_recomatch_pt
    - jet_recomatch_eta
    - jet_recomatch_phi
    - jet_recomatch_mass
    - jet_recomatch_deepcsv_bvsall
    - jet_recomatch_deepcsv_bvsc
+   - jet_recomatch_deepcsv_bvsq
+   - jet_recomatch_deepcsv_bvsg
    - jet_recomatch_deepcsv_bvsqg
    - jet_recomatch_pnet_bvsall
    - jet_recomatch_pnet_bvsc
+   - jet_recomatch_pnet_bvsq
+   - jet_recomatch_pnet_bvsg
    - jet_recomatch_pnet_bvsqg
 
 monitor_variables:
