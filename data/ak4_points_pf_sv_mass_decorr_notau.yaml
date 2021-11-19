@@ -138,9 +138,9 @@ weights:
    use_precomputed_weights: false
    reweight_method: flat
    reweight_vars:
-      jet_pt: [30, 35, 45, 60, 80, 105, 145, 190, 250, 330, 430, 570, 760, 1000]
+      jet_pt: [30, 44, 65, 97, 143, 210, 311, 459, 677, 1000]	
       jet_eta: [-2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5]
    reweight_classes: [label_b, label_c, label_uds, label_g]
-   class_weights: [1, 1, 1, 1]
+   class_weights: [1, 1.5, 3, 5]
    reweight_threshold: 15
    reweight_hists:
