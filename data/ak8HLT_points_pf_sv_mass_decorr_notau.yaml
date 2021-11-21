@@ -168,6 +168,6 @@ weights:
       jet_pt: [250, 315, 396, 499, 628, 791, 995, 1253, 1577, 1986, 2500]
       jet_mass_truth: [25, 45, 65, 85, 105, 125, 145, 165, 185, 205, 225, 245]
    reweight_classes: [label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD]
-   class_weights: [1, 1.5, 1.5, 1.5, 2.5]
+   class_weights: [1, 1, 1, 1, 2]
    reweight_threshold: 15
    reweight_hists:
