@@ -141,6 +141,7 @@ observers:
    - jet_pnetlitehlt_probXbb
    - jet_pnetlitehlt_probXcc
    - jet_pnetlitehlt_probXqq
+   - jet_pnetlitehlt_probXgg
    - jet_pnetlitehlt_probQCD
    - jet_flav_2prong_partonjet_match
    - jet_flav_2prong_parton_match
