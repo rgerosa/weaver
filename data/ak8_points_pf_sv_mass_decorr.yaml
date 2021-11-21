@@ -137,7 +137,6 @@ observers:
    - jet_pnet_probXqq
    - jet_pnet_probQCD
    - jet_tauflav
-   - jet_taudecaymode
    - jet_flav_2prong_partonjet_match
    - jet_flav_2prong_parton_match
    - jet_taumatch_pt
