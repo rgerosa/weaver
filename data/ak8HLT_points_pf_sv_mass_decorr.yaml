@@ -20,7 +20,7 @@ new_variables:
    label_H_cc: (sample>0) & (jet_flav_2prong_partonjet_match==6)
    label_H_qq: (sample>0) & (jet_flav_2prong_partonjet_match==5)
    label_H_gg: (sample>0) & (jet_flav_2prong_partonjet_match==4)
-   label_QCD:  (sample>0) & (jet_flav_2prong_partonjet_match==-1)
+   label_QCD:  (sample==0) & (jet_flav_2prong_partonjet_match==-1)
    jet_sv_pt_log: np.log(jet_sv_pt)
 
 preprocess:
