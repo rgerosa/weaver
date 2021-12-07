@@ -13,10 +13,10 @@ new_variables:
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    pfcand_mask: awkward.JaggedArray.ones_like(jet_pfcand_deta)
    sv_mask: awkward.JaggedArray.ones_like(jet_sv_deta)
-   label_b: (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_hflav==5)
-   label_c: (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_hflav==4)
+   label_b:   (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_hflav==5)
+   label_c:   (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_hflav==4)
    label_uds: (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)>0) & (np.abs(jet_pflav)<4)
-   label_g: (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)==21)
+   label_g:   (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)==21)
 
 preprocess:
    ### method: [manual, auto] - whether to use manually specified parameters for variable standardization

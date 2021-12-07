@@ -15,11 +15,11 @@ new_variables:
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    pfcand_mask: awkward.JaggedArray.ones_like(jet_pfcand_deta)
    sv_mask: awkward.JaggedArray.ones_like(jet_sv_deta)   
-   label_H_tt: (sample>0) & (jet_flav_2prong_partonjet_match==8) & (jet_tauflav==2)
-   label_H_bb: (sample>0) & (jet_flav_2prong_partonjet_match==7) & (jet_tauflav==0)
-   label_H_cc: (sample>0) & (jet_flav_2prong_partonjet_match==6) & (jet_tauflav==0)
-   label_H_qq: (sample>0) & (jet_flav_2prong_partonjet_match==5) & (jet_tauflav==0)
-   label_H_gg: (sample>0) & (jet_flav_2prong_partonjet_match==4) & (jet_tauflav==0)
+   label_H_tt: (sample>0)  & (jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==2)
+   label_H_bb: (sample>0)  & (jet_flav_2prong_partonjet_match==7)  & (jet_tauflav==0)
+   label_H_cc: (sample>0)  & (jet_flav_2prong_partonjet_match==6)  & (jet_tauflav==0)
+   label_H_qq: (sample>0)  & (jet_flav_2prong_partonjet_match==5)  & (jet_tauflav==0)
+   label_H_gg: (sample>0)  & (jet_flav_2prong_partonjet_match==4)  & (jet_tauflav==0)
    label_QCD:  (sample==0) & (jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0)
 
 preprocess:
