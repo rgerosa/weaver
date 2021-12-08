@@ -303,12 +303,13 @@ class ParticleNetTaggerNoSV(nn.Module):
                               for_inference=for_inference)
 
     def forward(self, pf_points, pf_features, pf_mask):
-        if self.pf_input_dropout:
-            pf_mask = (self.pf_input_dropout(pf_mask) != 0).float()
-            pf_points *= pf_mask
-            pf_features *= pf_mask
 
-        points = torch.cat((pf_points), dim=1)
-        features = torch.cat((self.pf_conv(pf_features * pf_mask) * pf_mask),dim=1)
-        mask = torch.cat((pf_mask), dim=1)
+        if self.pf_input_dropout:
+            pf_mask       = (self.pf_input_dropout(pf_mask) != 0).float()
+            pf_points    *= pf_mask
+            pf_features  *= pf_mask
+
+        points   = pf_points;
+        features = self.pf_conv(pf_features * pf_mask) * pf_mask;
+        mask     = pf_mask;
         return self.pn(points, features, mask)
