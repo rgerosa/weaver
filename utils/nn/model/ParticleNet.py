@@ -290,7 +290,7 @@ class ParticleNetTaggerNoSV(nn.Module):
                  pf_input_dropout=None,
                  for_inference=False,
                  **kwargs):
-        super(ParticleNetTagger, self).__init__(**kwargs)
+        super(ParticleNetTaggerNoSV, self).__init__(**kwargs)
         self.pf_input_dropout = nn.Dropout(pf_input_dropout) if pf_input_dropout else None
         self.pf_conv = FeatureConv(pf_features_dims, 32)
         self.pn = ParticleNet(input_dims=32,
