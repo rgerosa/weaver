@@ -21,7 +21,7 @@ new_variables:
    label_H_qq: (sample>0)  & (jet_flav_2prong_partonjet_match==5)  & (jet_tauflav==0)
    label_H_gg: (sample>0)  & (jet_flav_2prong_partonjet_match==4)  & (jet_tauflav==0)
    label_QCD:  (sample==0) & (jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0)
-   label_tau:  (sample>0)  & (jet_flav_2prong_partonjet_match==3)  & (jet_tauflav==1)
+   label_tau:  (sample>0)  & (jet_flav_2prong_partonjet_match==3 | jet_flav_2prong_partonjet_match==-1)  & (jet_tauflav==1)
 
 preprocess:
    ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
