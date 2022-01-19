@@ -674,7 +674,9 @@ def main(args):
             else:
                 test_metric, scores, labels, observers = evaluate(model, test_loader, dev, epoch=None, for_training=False, tb_helper=tb)
             _logger.info('Test metric %.5f' % test_metric, color='bold')
+            # delete test loader and metri
             del test_loader
+            del test_metric
 
             if args.predict_output:
                 if '/' not in args.predict_output:
@@ -692,7 +694,10 @@ def main(args):
                 else:
                     save_awk(args, output_path, scores, labels, observers)
                 _logger.info('Written output to %s' % output_path, color='bold')
-
+            # delete to save space
+            del scores;
+            del labels;
+            del observers;
 
 if __name__ == '__main__':
     args = parser.parse_args()
