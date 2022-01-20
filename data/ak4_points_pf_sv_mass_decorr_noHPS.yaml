@@ -15,7 +15,7 @@ new_variables:
    sv_mask: awkward.JaggedArray.ones_like(jet_sv_deta)
    label_b:   (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_hflav==5)
    label_c:   (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_hflav==4)
-   label_uds: (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)>0) & (np.abs(jet_pflav)<4)
+   label_uds: (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)>=0) & (np.abs(jet_pflav)<4)
    label_g:   (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)==21)
    label_tau: (jet_genmatch_pt>0) & (jet_tauflav==1)
    
