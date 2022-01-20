@@ -23,6 +23,7 @@ new_variables:
    label_QCD:  (sample==0) & (jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0)
    label_tau:  (sample==3) & ((jet_flav_2prong_partonjet_match==3) | (jet_flav_2prong_partonjet_match==-1))  & (jet_tauflav==1)
    _label_: np.stack([label_H_tt,label_H_bb,label_H_cc,label_H_qq,label_H_gg,label_QCD], axis=1).argmax(1)
+
 preprocess:
    ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
    method: manual
@@ -112,6 +113,7 @@ observers:
    - met
    - wgt
    - sample
+   - label_tau
    - jet_pt
    - jet_eta
    - jet_phi
