@@ -97,7 +97,7 @@ labels:
    ### type can be `simple`, `custom`
    ### [option 1] use `simple` for binary/multi-class classification, then `value` is a list of 0-1 labels
    type: simple
-   value: [label_b, label_c, label_uds, label_g, label_tau]
+   value: [label_tau, label_b, label_c, label_uds, label_g]
    ### [option 2] otherwise use `custom` to define the label, then `value` is a map
    # type: custom
    # value:
