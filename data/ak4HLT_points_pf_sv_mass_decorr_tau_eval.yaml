@@ -2,23 +2,22 @@ selection:
    ### use `&`, `|`, `~` for logical operations on numpy arrays
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    >-
-   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (jet_genmatch_pt>0)
+   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (jet_genmatch_pt>0) & !((np.abs(jet_pflav)==0) & (jet_hflav==0))
 
 test_time_selection:
    >-
-   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (jet_genmatch_pt>0)
+   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (jet_genmatch_pt>0) & !((np.abs(jet_pflav)==0) & (jet_hflav==0))
 
 new_variables:
    ### [format] name: formula
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    pfcand_mask: awkward.JaggedArray.ones_like(jet_pfcand_deta)
    sv_mask: awkward.JaggedArray.ones_like(jet_sv_deta)
-   label_b:   (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_hflav==5) 
-   label_c:   (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_hflav==4) 
-   label_uds: (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)>=0) & (np.abs(jet_pflav)<4)
-   label_g:   (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)==21)
-   label_tau: (jet_genmatch_pt>0) & (jet_tauflav==1)
-   _label_: np.stack([label_b,label_c,label_uds,label_g,label_tau], axis=1).argmax(1)
+   label_tau: (jet_tauflav==1)
+   label_b:   (jet_tauflav==0) & (jet_hflav==5) 
+   label_c:   (jet_tauflav==0) & (jet_hflav==4) 
+   label_uds: (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)>=0) & (np.abs(jet_pflav)<4)
+   label_g:   (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)==21)
 
 preprocess:
    ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
