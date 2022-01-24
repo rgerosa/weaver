@@ -114,6 +114,7 @@ observers:
    - jet_mass
    - jet_hflav
    - jet_pflav
+   - jet_tauflav
    - jet_genmatch_pt
    - jet_genmatch_eta
    - jet_genmatch_phi
