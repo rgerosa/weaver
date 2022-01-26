@@ -27,7 +27,7 @@ new_variables:
    label_H_qq: (jet_flav_2prong_partonjet_match==5)  & (jet_tauflav==0)
    label_H_gg: (jet_flav_2prong_partonjet_match==4)  & (jet_tauflav==0)
    label_QCD:  (jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0)
-   #label_tau:  ((jet_flav_2prong_partonjet_match==-1) | (jet_flav_2prong_partonjet_match==-3)) & (jet_tauflav==1)
+   label_tau:  ((jet_flav_2prong_partonjet_match==-1) | (jet_flav_2prong_partonjet_match==-3)) & (jet_tauflav==1)
 
 
 preprocess:
@@ -107,8 +107,7 @@ labels:
    ### type can be `simple`, `custom`
    ### [option 1] use `simple` for binary/multi-class classification, then `value` is a list of 0-1 labels
    type: simple
-   #value: [label_H_tt, label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD, label_tau]
-   value: [label_H_tt, label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD]
+   value: [label_H_tt, label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD, label_tau]
    ### [option 2] otherwise use `custom` to define the label, then `value` is a map
    # type: custom
    # value:
@@ -169,9 +168,7 @@ weights:
    reweight_vars:
       jet_pt: [250, 315, 396, 499, 628, 791, 995, 1253, 1577, 1987, 2500]
       jet_mass_truth: [25, 45, 65, 85, 105, 125, 145, 165, 185, 205]
-   #reweight_classes: [label_H_tt, label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD, label_tau]
-   #class_weights: [1.0, 1.5, 1.5, 1.5, 1.5, 1.5, 1.0]
-   reweight_classes: [label_H_tt, label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD]
-   class_weights: [1.0, 1.5, 1.5, 1.5, 1.5, 1.5]
+   reweight_classes: [label_H_tt, label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD, label_tau]
+   class_weights: [1.0, 1.5, 1.5, 1.5, 1.5, 1.5, 1.0]
    reweight_threshold: 15
    reweight_hists:
