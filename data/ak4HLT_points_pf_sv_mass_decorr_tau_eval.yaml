@@ -2,7 +2,7 @@ selection:
    ### use `&`, `|`, `~` for logical operations on numpy arrays
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    >-
-   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (jet_genmatch_pt>0) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0)) & (event%7!=0)
+   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (jet_genmatch_pt>0) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0)) 
 
 test_time_selection:
    >-
@@ -167,6 +167,6 @@ weights:
       jet_pt: [30, 38, 48, 60, 76, 97, 122, 154, 195, 246, 311, 393, 496, 627, 792, 1000]
       jet_eta: [-2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5]
    reweight_classes: [label_tau, label_b, label_c, label_uds, label_g]
-   class_weights: [1, 2, 2, 4, 6]
+   class_weights: [1, 1.5, 1.5, 3, 5]
    reweight_threshold: 15
    reweight_hists:
