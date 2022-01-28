@@ -6,7 +6,7 @@ selection:
 
 test_time_selection:
    >-
-   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (jet_genmatch_pt>0) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0))
+   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (jet_genmatch_pt>0) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0)) & (event%7==0) 
 
 new_variables:
    ### [format] name: formula
