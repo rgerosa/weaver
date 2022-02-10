@@ -3,28 +3,37 @@ selection:
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    >-
    (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>=30) & (jet_mass_truth<=200) & (jet_genmatch_pt>0) & (event%7!=0) &
-   (((jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0)) |
-    ((jet_flav_2prong_partonjet_match>=4)  & (jet_flav_2prong_partonjet_match<=7) & (jet_tauflav==0)) |
-    ((jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==2)))
+   (((jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)) |
+    (((jet_flav_2prong_partonjet_match==-1) | (jet_flav_2prong_partonjet_match==1)) & (jet_tauflav==1) & (jet_muflav==0) & (jet_elflav==0)) |
+    ((jet_flav_2prong_partonjet_match==2)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==2)) |
+    ((jet_flav_2prong_partonjet_match==3)  & (jet_tauflav==0) & (jet_muflav==2) & (jet_elflav==0)) |
+    ((jet_flav_2prong_partonjet_match>=4)  & (jet_flav_2prong_partonjet_match<=7) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)) |
+    ((jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==2) & (jet_muflav==0) & (jet_elflav==0)))  
 
 test_time_selection:
    >-
    (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>=30) & (jet_mass_truth<=200) & (jet_genmatch_pt>0) & (event%7==0) &
-   (((jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0)) |
-    ((jet_flav_2prong_partonjet_match>=4)  & (jet_flav_2prong_partonjet_match<=7) & (jet_tauflav==0)) |
-    ((jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==2)))
+   (((jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)) |
+    (((jet_flav_2prong_partonjet_match==-1) | (jet_flav_2prong_partonjet_match==1)) & (jet_tauflav==1) & (jet_muflav==0) & (jet_elflav==0)) |
+    ((jet_flav_2prong_partonjet_match==2)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==2)) |
+    ((jet_flav_2prong_partonjet_match==3)  & (jet_tauflav==0) & (jet_muflav==2) & (jet_elflav==0)) |
+    ((jet_flav_2prong_partonjet_match>=4)  & (jet_flav_2prong_partonjet_match<=7) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)) |
+    ((jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==2) & (jet_muflav==0) & (jet_elflav==0)))  
 
 new_variables:
    ### [format] name: formula
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    pfcand_mask: awkward.JaggedArray.ones_like(jet_pfcand_deta)
    sv_mask: awkward.JaggedArray.ones_like(jet_sv_deta)
-   label_H_tt: (jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==2)
-   label_H_bb: (jet_flav_2prong_partonjet_match==7)  & (jet_tauflav==0)
-   label_H_cc: (jet_flav_2prong_partonjet_match==6)  & (jet_tauflav==0)
-   label_H_qq: (jet_flav_2prong_partonjet_match==5)  & (jet_tauflav==0)
-   label_H_gg: (jet_flav_2prong_partonjet_match==4)  & (jet_tauflav==0)
-   label_QCD:  (jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0)
+   label_H_tt: (jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==2) & (jet_muflav==0) & (jet_elflav==0)
+   label_H_mm: (jet_flav_2prong_partonjet_match==3)  & (jet_tauflav==0) & (jet_muflav==2) & (jet_elflav==0)
+   label_H_ee: (jet_flav_2prong_partonjet_match==2)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==2)
+   label_H_bb: (jet_flav_2prong_partonjet_match==7)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
+   label_H_cc: (jet_flav_2prong_partonjet_match==6)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
+   label_H_qq: (jet_flav_2prong_partonjet_match==5)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
+   label_H_gg: (jet_flav_2prong_partonjet_match==4)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
+   label_QCD:  (jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
+   label_tau:  ((jet_flav_2prong_partonjet_match==-1) | (jet_flav_2prong_partonjet_match==-3)) & (jet_tauflav==1) & (jet_muflav==0) & (jet_elflav==0)
 
 preprocess:
    ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
@@ -71,17 +80,39 @@ inputs:
          - [jet_pfcand_trackjet_decayL, 0, 65]
          - [jet_pfcand_npixhits, 0, 0.1]
          - [jet_pfcand_nstriphits, 0, 0.1]
-         - [jet_pfcand_tau_signal, null]
    pf_mask:
       length: 120
       vars:
          - [pfcand_mask, null]
+   sv_points:
+      length: 10
+      vars:
+         - [jet_sv_deta, null]
+         - [jet_sv_dphi, null]
+   sv_features:
+      length: 10
+      vars:
+         - [jet_sv_pt_log, 4, 0.6]
+         - [jet_sv_mass, 1.2, 0.3]
+         - [jet_sv_deta, null]
+         - [jet_sv_dphi, null]
+         - [jet_sv_eta, 0, 0.8]
+         - [jet_sv_ntrack, 3, 1]
+         - [jet_sv_chi2, 0.8, 0.6]
+         - [jet_sv_dxy, 0.4, 0.25]
+         - [jet_sv_dxysig, 7, 0.02]
+         - [jet_sv_d3d, 0.5, 0.2]
+         - [jet_sv_d3dsig, 7, 0.02]
+   sv_mask:
+      length: 10
+      vars:
+         - [sv_mask, null]
 
 labels:
    ### type can be `simple`, `custom`
    ### [option 1] use `simple` for binary/multi-class classification, then `value` is a list of 0-1 labels
    type: simple
-   value: [label_H_tt, label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD]
+   value: [label_H_tt, label_H_mm, label_H_ee, label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD, label_tau]
    ### [option 2] otherwise use `custom` to define the label, then `value` is a map
    # type: custom
    # value:
@@ -92,39 +123,47 @@ observers:
    - npv
    - met
    - wgt
+   - pu
    - sample
    - jet_pt
    - jet_eta
    - jet_phi
    - jet_mass
+   - jet_ncand
    - jet_softdrop_mass
+   - jet_softdrop_genmatch_mass
    - jet_mass_truth
-   - jet_regression_mass
    - jet_hflav
    - jet_pflav
+   - jet_tauflav
+   - jet_muflav
+   - jet_elflav
    - jet_genmatch_pt
    - jet_genmatch_eta
    - jet_genmatch_phi
    - jet_genmatch_mass
-   - jet_softdrop_genmatch_mass
    - jet_doublebtag
-   - jet_deepcsv_probb
-   - jet_deepcsv_probbb
-   - jet_deepcsv_probc
-   - jet_deepcsv_probudsg
    - jet_pnet_probXbb
    - jet_pnet_probXcc
    - jet_pnet_probXqq
    - jet_pnet_probQCD
-   - jet_tauflav
+   - jet_pnethlt_probXbb
+   - jet_pnethlt_probXcc
+   - jet_pnethlt_probXqq
+   - jet_pnethlt_probXgg
+   - jet_pnethlt_probQCD
    - jet_flav_2prong_partonjet_match
    - jet_flav_2prong_parton_match
-   - jet_taumatch_pt
-   - jet_taumatch_eta
-   - jet_taumatch_phi
-   - jet_taumatch_mass
-   - jet_taumatch_decaymode
-   - jet_taumatch_idjet
+   - jet_recomatch_pt
+   - jet_recomatch_eta
+   - jet_recomatch_phi
+   - jet_recomatch_mass
+   - jet_recomatch_softdrop_mass
+   - jet_recomatch_doublebtag
+   - jet_recomatch_pnet_probXbb
+   - jet_recomatch_pnet_probXcc
+   - jet_recomatch_pnet_probXqq
+   - jet_recomatch_pnet_probQCD
 
 monitor_variables:
 
@@ -138,7 +177,7 @@ weights:
    reweight_vars:
       jet_pt: [250, 315, 396, 499, 628, 791, 995, 1253, 1577, 1987, 2500]
       jet_mass_truth: [25, 45, 65, 85, 105, 125, 145, 165, 185, 205]
-   reweight_classes: [label_H_tt, label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD]
-   class_weights: [1, 1.5, 1.5, 1.5, 1.5, 1.5]
+   reweight_classes: [label_H_tt, label_H_mm, label_H_ee, label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD, label_tau]
+   class_weights: [1.0, 1.0, 1.0, 1.5, 1.5, 1.5, 1.5, 1.5, 1.0]
    reweight_threshold: 15
    reweight_hists:

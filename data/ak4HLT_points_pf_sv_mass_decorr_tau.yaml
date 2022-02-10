@@ -2,11 +2,11 @@ selection:
    ### use `&`, `|`, `~` for logical operations on numpy arrays
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    >-
-   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (event%7!=0) & (jet_genmatch_pt>0) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0))
+   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (event%7!=0) & (jet_genmatch_pt>0) & (jet_muflav==0) & (jet_elflav==0) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0))
 
 test_time_selection:
    >-
-   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (event%7==0) & (jet_genmatch_pt>0) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0))
+   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (event%7==0) & (jet_genmatch_pt>0) & (jet_muflav==0) & (jet_elflav==0) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0))
 
 new_variables:
    ### [format] name: formula
@@ -108,50 +108,56 @@ observers:
    - wgt
    - met
    - sample
+   - pu
    - jet_pt
    - jet_eta
    - jet_phi
    - jet_mass
+   - jet_ncand
    - jet_hflav
    - jet_pflav
    - jet_tauflav
+   - jet_taudecaymode
+   - jet_muflav
+   - jet_elflav
    - jet_genmatch_pt
    - jet_genmatch_eta
    - jet_genmatch_phi
    - jet_genmatch_mass
-   - jet_deepcsv_bvsall
-   - jet_deepcsv_bvsc
-   - jet_deepcsv_bvsq
-   - jet_deepcsv_bvsg
-   - jet_deepcsv_bvsqg
-   - jet_pnet_bvsall
-   - jet_pnet_bvsc
-   - jet_pnet_bvsq
-   - jet_pnet_bvsg
-   - jet_pnet_bvsqg
-   - jet_pnethlt_bvsall
-   - jet_pnethlt_bvsc
-   - jet_pnethlt_bvsq   
-   - jet_pnethlt_bvsg   
-   - jet_pnethlt_bvsqg   
-   - jet_pnethlt_bvsall
-   - jet_pnethlt_bvsc
-   - jet_pnethlt_bvsqg
-   - jet_pnethlt_bvsq
-   - jet_pnethlt_bvsg
+   - jet_genmatch_wnu_pt
+   - jet_genmatch_wnu_eta
+   - jet_genmatch_wnu_phi
+   - jet_genmatch_wnu_mass
+   - jet_deepcsv_probb
+   - jet_deepcsv_probc
+   - jet_deepcsv_probudsg
+   - jet_deepjet_probb
+   - jet_deepjet_probc
+   - jet_deepjet_probuds
+   - jet_deepjet_probg
+   - jet_pnet_probb
+   - jet_pnet_probc
+   - jet_pnet_probuds
+   - jet_pnet_probg
+   - jet_pnethlt_probb
+   - jet_pnethlt_probc
+   - jet_pnethlt_probuds  
+   - jet_pnethlt_probg
    - jet_recomatch_pt
    - jet_recomatch_eta
    - jet_recomatch_phi
    - jet_recomatch_mass
-   - jet_recomatch_deepcsv_bvsall
-   - jet_recomatch_deepcsv_bvsc
-   - jet_recomatch_deepcsv_bvsq
-   - jet_recomatch_deepcsv_bvsg
-   - jet_recomatch_deepcsv_bvsqg
-   - jet_recomatch_pnet_bvsall
-   - jet_recomatch_pnet_bvsc
-   - jet_recomatch_pnet_bvsq
-   - jet_recomatch_pnet_bvsg
+   - jet_recomatch_deepcsv_probb
+   - jet_recomatch_deepcsv_probc
+   - jet_recomatch_deepcsv_probudsg
+   - jet_recomatch_deepjet_probb
+   - jet_recomatch_deepjet_probc
+   - jet_recomatch_deepjet_probuds
+   - jet_recomatch_deepjet_probg
+   - jet_recomatch_pnet_probb
+   - jet_recomatch_pnet_probc
+   - jet_recomatch_pnet_probuds
+   - jet_recomatch_pnet_probg
    - jet_recomatch_pnet_bvsqg
 
 monitor_variables:
