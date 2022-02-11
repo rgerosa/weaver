@@ -2,19 +2,21 @@ selection:
    ### use `&`, `|`, `~` for logical operations on numpy arrays
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    >-
-   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (event%7!=0) & (jet_genmatch_pt>0) & (jet_muflav==0) & (jet_elflav==0) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0))
+   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (event%7!=0) & (jet_genmatch_pt>0) & (jet_muflav==0) & (jet_elflav==0) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0)) & ~((jet_tauflav==1) & (jet_taudecaymode<0)) & ~((jet_tauflav==1) & (jet_taudecaymode>2 & jet_taudecaymode<10)) & ~((jet_tauflav==1) & (jet_taudecaymode>11))
 
 test_time_selection:
    >-
-   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (event%7==0) & (jet_genmatch_pt>0) & (jet_muflav==0) & (jet_elflav==0) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0))
+   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (event%7==0) & (jet_genmatch_pt>0) & (jet_muflav==0) & (jet_elflav==0) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0)) & ~((jet_tauflav==1) & (jet_taudecaymode<0)) & ~((jet_tauflav==1) & (jet_taudecaymode>2 & jet_taudecaymode<10)) & ~((jet_tauflav==1) & (jet_taudecaymode>11))
 
 new_variables:
    ### [format] name: formula
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    pfcand_mask: awkward.JaggedArray.ones_like(jet_pfcand_deta)
    sv_mask: awkward.JaggedArray.ones_like(jet_sv_deta)
-   label_tau_oneprong: (jet_tauflav==1) & (jet_taudecaymode <=5)
-   label_tau_threeprong: (jet_tauflav==1) & (jet_taudecaymode >5)
+   label_tau_1h0p: (jet_tauflav==1) & (jet_taudecaymode==0)
+   label_tau_1h1or2p: (jet_tauflav==1) & (jet_taudecaymode==1 | jet_taudecaymode==2)
+   label_tau_3h0p: (jet_tauflav==1) & (jet_taudecaymode==10)
+   label_tau_3h1p: (jet_tauflav==1) & (jet_taudecaymode==11)
    label_b:   (jet_tauflav==0) & (jet_hflav==5) 
    label_c:   (jet_tauflav==0) & (jet_hflav==4) 
    label_uds: (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)>=0) & (np.abs(jet_pflav)<4)
@@ -97,7 +99,7 @@ labels:
    ### type can be `simple`, `custom`
    ### [option 1] use `simple` for binary/multi-class classification, then `value` is a list of 0-1 labels
    type: simple
-   value: [label_tau_oneprong, label_tau_threeprong, label_b, label_c, label_uds, label_g]
+   value: [label_tau_1h0p, label_tau_1h1or2p, label_tau_3h0p, label_tau_3h1p, label_b, label_c, label_uds, label_g]
    ### [option 2] otherwise use `custom` to define the label, then `value` is a map
    # type: custom
    # value:
@@ -173,7 +175,7 @@ weights:
    reweight_vars:
       jet_pt: [30, 38, 48, 60, 76, 97, 122, 154, 195, 246, 311, 393, 496, 627, 792, 1000]
       jet_eta: [-2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5]
-   reweight_classes: [label_tau_oneprong, label_tau_threeprong, label_b, label_c, label_uds, label_g]
-   class_weights: [1, 1, 1.5, 1.5, 3, 5]
+   reweight_classes: [label_tau_1h0p, label_tau_1h1or2p, label_tau_3h0p, label_tau_3h1p, label_b, label_c, label_uds, label_g]
+   class_weights: [2.0, 1.5, 2.25, 2.5, 1.0, 1.0, 3.0, 5.0]
    reweight_threshold: 15
    reweight_hists:
