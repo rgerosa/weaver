@@ -2,11 +2,11 @@ selection:
    ### use `&`, `|`, `~` for logical operations on numpy arrays
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    >-
-   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (event%7!=0) & (jet_genmatch_pt>0) & ~((jet_tauflav==0 & jet_muflav==0 & jet_elflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0 & jet_muflav==0 & jet_elflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0 & jet_muflav==0 & jet_elflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0))
+   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (event%7!=0) & (jet_genmatch_pt>0) & ~((jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0))
 
 test_time_selection:
    >-
-   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (event%7==0) & (jet_genmatch_pt>0) & ~((jet_tauflav==0 & jet_muflav==0 & jet_elflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0 & jet_muflav==0 & jet_elflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0 & jet_muflav==0 & jet_elflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0))
+   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (event%7==0) & (jet_genmatch_pt>0) & ~((jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0))
 
 new_variables:
    ### [format] name: formula
