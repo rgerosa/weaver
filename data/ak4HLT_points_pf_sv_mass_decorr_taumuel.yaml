@@ -173,7 +173,7 @@ weights:
    reweight_vars:
       jet_pt: [30, 38, 48, 60, 76, 97, 122, 154, 195, 246, 311, 393, 496, 627, 792, 1000]
       jet_eta: [-2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5]
-   reweight_classes: [label_mu, label_ele, label_tau, label_b, label_c, label_uds, label_g]
+   reweight_classes: [label_mu, label_el, label_tau, label_b, label_c, label_uds, label_g]
    class_weights: [1, 1, 1, 1.5, 1.5, 3, 5]
    reweight_threshold: 15
    reweight_hists:
