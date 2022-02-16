@@ -14,7 +14,7 @@ new_variables:
    pfcand_mask: awkward.JaggedArray.ones_like(jet_pfcand_deta)
    sv_mask: awkward.JaggedArray.ones_like(jet_sv_deta)
    label_tau_1h0p: (jet_tauflav==1) & (jet_taudecaymode==0)
-   label_tau_1h1or2p: (jet_tauflav==1) & (jet_taudecaymode==1 | jet_taudecaymode==2)
+   label_tau_1h1or2p: (jet_tauflav==1) & ((jet_taudecaymode==1) | (jet_taudecaymode==2))
    label_tau_3h0p: (jet_tauflav==1) & (jet_taudecaymode==10)
    label_tau_3h1p: (jet_tauflav==1) & (jet_taudecaymode==11)
    label_b:   (jet_tauflav==0) & (jet_hflav==5) 
