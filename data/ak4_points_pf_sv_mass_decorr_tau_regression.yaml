@@ -99,8 +99,8 @@ labels:
    #type: simple
    #value: [label_tau, label_b, label_c, label_uds, label_g]
    ### [option 2] otherwise use `custom` to define the label, then `value` is a map
-   type: custom
-    value:
+   type: custom 
+   value: 
       target_pt : np.clip(jet_genmatch_wnu_pt/jet_pt,0,5)
 
 observers:
