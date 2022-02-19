@@ -2,7 +2,7 @@ selection:
    ### use `&`, `|`, `~` for logical operations on numpy arrays
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    >-
-   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>=30) & (jet_mass_truth<=200) & (jet_genmatch_pt>0) & (event%7!=0) &
+   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>=30) & (jet_mass_truth<=200) & (jet_genmatch_pt>0) & (event%7!=0) & ~(jet_muflav==1) & ~(jet_elflav==1) &
    (((jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)) |
     (((jet_flav_2prong_partonjet_match==-1) | (jet_flav_2prong_partonjet_match==1)) & (jet_tauflav==1) & (jet_muflav==0) & (jet_elflav==0)) |
     ((jet_flav_2prong_partonjet_match==2)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==2)) |
@@ -12,7 +12,7 @@ selection:
 
 test_time_selection:
    >-
-   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>=30) & (jet_mass_truth<=200) & (jet_genmatch_pt>0) & (event%7==0) &
+   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>=30) & (jet_mass_truth<=200) & (jet_genmatch_pt>0) & (event%7==0) & ~(jet_muflav==1) & ~(jet_elflav==1) &
    (((jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)) |
     (((jet_flav_2prong_partonjet_match==-1) | (jet_flav_2prong_partonjet_match==1)) & (jet_tauflav==1) & (jet_muflav==0) & (jet_elflav==0)) |
     ((jet_flav_2prong_partonjet_match==2)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==2)) |
@@ -33,7 +33,7 @@ new_variables:
    label_H_qq: (jet_flav_2prong_partonjet_match==5)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
    label_H_gg: (jet_flav_2prong_partonjet_match==4)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
    label_QCD:  (jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
-   label_tau:  ((jet_flav_2prong_partonjet_match==-1) | (jet_flav_2prong_partonjet_match==-3)) & (jet_tauflav==1) & (jet_muflav==0) & (jet_elflav==0)
+   label_tau:  ((jet_flav_2prong_partonjet_match==-1) | (jet_flav_2prong_partonjet_match==1)) & (jet_tauflav==1) & (jet_muflav==0) & (jet_elflav==0)
 
 preprocess:
    ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
