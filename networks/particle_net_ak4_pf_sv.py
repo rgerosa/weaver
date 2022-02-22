@@ -3,26 +3,32 @@ from utils.nn.model.ParticleNet import ParticleNetTagger
 
 
 def get_model(data_config, **kwargs):
+
     conv_params = [
-        (8, (64, 64, 64)),
-        (8, (96, 96, 96)),
-        (8, (128, 128, 128)),
+        (16, (64, 64, 64)),
+        (16, (96, 96, 96)),
+        (16, (128, 128, 128)),
         ]
+
     fc_params = [(128, 0.1)]
+
     use_fusion = True
 
     pf_features_dims = len(data_config.input_dicts['pf_features'])
     sv_features_dims = len(data_config.input_dicts['sv_features'])
     num_classes = len(data_config.label_value)
-    model = ParticleNetTagger(pf_features_dims, sv_features_dims, num_classes,
-                              conv_params, fc_params,
+    model = ParticleNetTagger(pf_features_dims, 
+                              sv_features_dims, 
+                              num_classes,
+                              conv_params, 
+                              fc_params,
                               use_fusion=use_fusion,
                               use_fts_bn=kwargs.get('use_fts_bn', False),
                               use_counts=kwargs.get('use_counts', True),
                               pf_input_dropout=kwargs.get('pf_input_dropout', None),
                               sv_input_dropout=kwargs.get('sv_input_dropout', None),
                               for_inference=kwargs.get('for_inference', False)
-                              )
+                          )
 
     model_info = {
         'input_names':list(data_config.input_names),

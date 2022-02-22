@@ -69,7 +69,7 @@ def _finalize_inputs(table, data_config):
             table['_' + k] = np.stack([table[n] for n in names], axis=1)
     # reduce memory usage
     for n in set(chain(*data_config.input_dicts.values())):
-        if n not in data_config.label_names and n not in data_config.observer_names:
+        if n not in data_config.label_names and n not in data_config.observer_names and n not in data_config.target_names:
             del table[n]
 
 
@@ -94,9 +94,9 @@ def _check_labels(table):
         del table['_labelcheck_']
     else:
         if np.any(table['_labelcheck_'] == 0):
-            raise RuntimeError('Inconsistent label definition: some of the entries are not assigned to any classes!')
+            raise RuntimeError('Inconsistent label definition: some of the entries are not assigned any label!')
         if np.any(table['_labelcheck_'] > 1):
-            raise RuntimeError('Inconsistent label definition: some of the entries are assigned to multiple classes!')
+            raise RuntimeError('Inconsistent label definition: some of the entries are assigned multiple labels!')
 
 
 def _preprocess(table, data_config, options):
@@ -270,9 +270,9 @@ class _SimpleIter(object):
 
     def get_data(self, i):
         # inputs
-        X = {k: self.table['_' + k][i].copy() for k in self._data_config.input_names}
+        X = {k: self.table['_' + k][i].copy() for k in self._data_config.input_names}        
         # labels
-        y = {k: self.table[k][i].copy() for k in self._data_config.label_names}
+        y = {k: self.table[k][i].copy() for k in self._data_config.label_names+self._data_config.target_names}
         # observers / monitor variables
         Z = {k: self.table[k][i].copy() for k in self._data_config.z_variables}
         return X, y, Z
