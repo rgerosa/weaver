@@ -49,6 +49,8 @@ bash Miniconda3-latest-Linux-x86_64.sh
 
 # disable auto activation of the base environment
 conda config --set auto_activate_base false
+# in order to resolve at best conflicts
+conda config --set channel_priority strict
 ```
 
 Verify the installation is successful by running `conda info` and check if the paths are pointing to your Miniconda installation.
@@ -63,10 +65,15 @@ export PATH="$HOME/miniconda3/bin:$PATH"
 
 ```bash
 # create a new conda environment
-conda create -n weaver python=3.7
+conda create -n weaver python=3
 
 # activate the environment
 conda activate weaver
+
+# if needed you can install root and git in your conda environment
+conda install -c conda-forge root
+conda install -c conda-forge git
+conda clean --tarballs
 
 # install the necessary python packages
 pip install numpy pandas scikit-learn scipy matplotlib tqdm PyYAML
@@ -85,7 +92,11 @@ pip install tensorboard
 
 # install pytorch, follow instructions for your OS/CUDA version at:
 # https://pytorch.org/get-started
-# pip install torch
+# current best recipe for Linux via pip is below
+pip install torch==1.10.2+cu113 torchvision==0.11.3+cu113 torchaudio==0.10.2+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
+
+# purge cache
+pip cache purge
 ```
 
 ## Prepare your configuration files
