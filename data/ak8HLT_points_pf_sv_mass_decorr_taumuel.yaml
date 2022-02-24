@@ -122,7 +122,7 @@ observers:
    - npv
    - met
    - wgt
-   - pu
+   - npu
    - sample
    - jet_pt
    - jet_eta

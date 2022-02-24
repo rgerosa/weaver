@@ -111,7 +111,7 @@ observers:
    - wgt
    - met
    - sample
-   - pu
+   - npu
    - jet_pt
    - jet_eta
    - jet_phi
