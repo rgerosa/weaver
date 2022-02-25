@@ -2,14 +2,14 @@ selection:
    ### use `&`, `|`, `~` for logical operations on numpy arrays
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    >-
-   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>=30) & (jet_mass_truth<=200) & (jet_genmatch_pt>0) & (event%7!=0) & (jet_muflav==0) & (jet_elflav==0) & ~(jet_tauflav==1) &
+   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>=30) & (jet_mass_truth<=200) & (jet_mass_regression_truth>=30) & (jet_mass_regression_truth<=200) & (jet_genmatch_pt>0) & (event%7!=0) & (jet_muflav==0) & (jet_elflav==0) & ~(jet_tauflav==1) &
    (((jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0)) |
     ((jet_flav_2prong_partonjet_match>=4)  & (jet_flav_2prong_partonjet_match<=7) & (jet_tauflav==0)) |
     ((jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==2)))
 
 test_time_selection:
    >-
-   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>=30) & (jet_mass_truth<=200) & (jet_genmatch_pt>0) & (event%7==0) & (jet_muflav==0) & (jet_elflav==0) & ~(jet_tauflav==1) &
+   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>=30) & (jet_mass_truth<=200) & (jet_mass_regression_truth>=30) & (jet_mass_regression_truth<=200) & (jet_genmatch_pt>0) & (event%7==0) & (jet_muflav==0) & (jet_elflav==0) & ~(jet_tauflav==1) &
    (((jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0)) |
     ((jet_flav_2prong_partonjet_match>=4)  & (jet_flav_2prong_partonjet_match<=7) & (jet_tauflav==0)) |
     ((jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==2)))
