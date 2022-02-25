@@ -107,7 +107,7 @@ labels:
    ### [option 2] otherwise use `custom` to define the label, then `value` is a map 
    type: custom
    value: 
-      target_mass: np.clip(jet_mass_regression_truth/jet_mass,0,10) 
+      target_mass: np.clip(jet_mass_regression_truth/np.max(0.001,jet_mass),0,10) 
 
 observers:
    - event
