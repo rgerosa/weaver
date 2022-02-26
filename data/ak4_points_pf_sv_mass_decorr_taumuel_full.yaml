@@ -13,8 +13,8 @@ new_variables:
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    pfcand_mask: awkward.JaggedArray.ones_like(jet_pfcand_deta)
    sv_mask: awkward.JaggedArray.ones_like(jet_sv_deta)
-   label_mu:  (jet_muflav==1)
-   label_el:  (jet_elflav==1)  & (jet_muflav==0)
+   label_mu:  (jet_muflav==1) & (jet_elflav==0) & (jet_tauflav==0)
+   label_el:  (jet_elflav==1) & (jet_muflav==0) & (jet_tauflav==0)
    label_tau_1h0p: (jet_tauflav==1) & (jet_taudecaymode==0) & (jet_muflav==0) & (jet_elflav==0)
    label_tau_1h1or2p: (jet_tauflav==1) & ((jet_taudecaymode==1) | (jet_taudecaymode==2)) & (jet_muflav==0) & (jet_elflav==0)
    label_tau_3h0p: (jet_tauflav==1) & (jet_taudecaymode==10) & (jet_muflav==0) & (jet_elflav==0)
