@@ -65,6 +65,7 @@ inputs:
          - [jet_pfcand_trackjet_decayL, 0, 65]
          - [jet_pfcand_npixhits, 0, 0.1]
          - [jet_pfcand_nstriphits, 0, 0.1]
+         - [jet_pfcand_id, 2, 0.2]
    pf_mask:
       length: 50
       vars:
@@ -101,7 +102,7 @@ labels:
    ### [option 2] otherwise use `custom` to define the label, then `value` is a map
    type: custom 
    value: 
-      target_pt : np.clip(jet_genmatch_wnu_pt/jet_pt,0,5)
+      target_pt : np.clip(jet_genmatch_wnu_pt/jet_pt,0,2)
 
 observers:
    - event
@@ -168,6 +169,6 @@ weights:
       jet_pt: [30, 38, 48, 60, 76, 97, 122, 154, 195, 246, 311, 393, 496, 627, 792, 1000]
       jet_eta: [-2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5]
    reweight_classes: [label_tau, label_b, label_c, label_uds, label_g]
-   class_weights: [1, 1.5, 1.5, 3, 5]
+   class_weights: [1, 1, 1, 1, 1]
    reweight_threshold: 15
    reweight_hists:
