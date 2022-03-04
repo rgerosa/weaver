@@ -72,6 +72,8 @@ inputs:
          - [jet_pfcand_npixhits, 0, 0.1]
          - [jet_pfcand_nstriphits, 0, 0.1]
          - [jet_pfcand_id, 4, 0.2]
+         - [jet_pfcand_hcalfraction, null]
+         - [jet_pfcand_calofraction, null]
    pf_mask:
       length: 120
       vars:
@@ -121,10 +123,13 @@ observers:
    - jet_eta
    - jet_phi
    - jet_mass
-   - jet_ncand
    - jet_softdrop_mass
    - jet_softdrop_genmatch_mass
    - jet_regression_mass
+   - jet_ncand
+   - jet_pt_truth
+   - jet_eta_truth
+   - jet_phi_truth
    - jet_mass_truth
    - jet_hflav
    - jet_pflav

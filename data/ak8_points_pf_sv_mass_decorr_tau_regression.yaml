@@ -72,6 +72,8 @@ inputs:
          - [jet_pfcand_npixhits, 0, 0.1]
          - [jet_pfcand_nstriphits, 0, 0.1]
          - [jet_pfcand_id, 4, 0.2]
+         - [jet_pfcand_hcalfraction, null]
+         - [jet_pfcand_calofraction, null]
    pf_mask:
       length: 120
       vars:
@@ -122,29 +124,37 @@ observers:
    - jet_eta
    - jet_phi
    - jet_mass
-   - jet_ncand
    - jet_softdrop_mass
-   - jet_softdrop_genmatch_mass
    - jet_regression_mass
-   - jet_mass_truth
+   - jet_ncand
    - jet_hflav
    - jet_pflav
    - jet_tauflav
    - jet_muflav
    - jet_elflav
+   - jet_flav_2prong_partonjet_match
+   - jet_flav_2prong_parton_match
    - jet_genmatch_pt
    - jet_genmatch_eta
    - jet_genmatch_phi
    - jet_genmatch_mass
+   - jet_softdrop_genmatch_mass
+   - jet_pt_truth
+   - jet_eta_truth
+   - jet_phi_truth
+   - jet_mass_truth
+   - jet_pt_regression_truth
+   - jet_eta_regression_truth
+   - jet_phi_regression_truth
+   - jet_mass_regression_truth
    - jet_doublebtag
    - jet_pnet_probXbb
    - jet_pnet_probXcc
    - jet_pnet_probXqq
    - jet_pnet_probQCD
-   - jet_flav_2prong_partonjet_match
-   - jet_flav_2prong_parton_match
    - label_H_tt
    - label_H_bb
+   - label_H_cc
    - label_H_qq
    - label_H_gg
    - label_QCD

@@ -67,6 +67,8 @@ inputs:
          - [jet_pfcand_npixhits, 0, 0.1]
          - [jet_pfcand_nstriphits, 0, 0.1]
          - [jet_pfcand_id, 2, 0.2]
+         - [jet_pfcand_hcalfraction, null]
+         - [jet_pfcand_calofraction, null]
    pf_mask:
       length: 50
       vars:
