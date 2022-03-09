@@ -24,7 +24,7 @@ def get_model(data_config, **kwargs):
                               num_classes,
                               conv_params, 
                               fc_params,
-                              input_dims=32,
+                              input_dims=64,
                               use_fusion=use_fusion,
                               use_fts_bn=kwargs.get('use_fts_bn', False),
                               use_counts=kwargs.get('use_counts', True),
