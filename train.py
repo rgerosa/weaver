@@ -643,9 +643,7 @@ def main(args):
             return
 
         # training loop
-        best_valid_cat_metric = 0; ## for classification
-        best_valid_reg_metric = np.inf;  ## for regression
-        best_valid_metric = np.inf if args.regression_mode else 0
+        best_valid_metric = np.inf if args.regression_mode or args.hybrid_mode else 0
         grad_scaler = torch.cuda.amp.GradScaler() if args.use_amp else None
         for epoch in range(args.num_epochs):
             if args.load_epoch is not None:
@@ -664,33 +662,18 @@ def main(args):
                 torch.save(opt.state_dict(), args.model_prefix + '_epoch-%d_optimizer.pt' % epoch)
 
             _logger.info('Epoch #%d validating' % epoch)
-
-            if args.hybrid_mode:
-                ## for combined trainings both metrics have to be better
-                valid_cat_metric, valid_reg_metric = evaluate(model, val_loader, dev, epoch, loss_func=loss_func,steps_per_epoch=args.steps_per_epoch_val, tb_helper=tb)
-                is_best_epoch = (valid_reg_metric <= best_valid_reg_metric) and (valid_cat_metric >= best_valid_cat_metric)
-            else:
-                valid_metric = evaluate(model, val_loader, dev, epoch, loss_func=loss_func,steps_per_epoch=args.steps_per_epoch_val, tb_helper=tb)
-                is_best_epoch = (valid_metric < best_valid_metric) if args.regression_mode else(valid_metric > best_valid_metric)
+            valid_metric = evaluate(model, val_loader, dev, epoch, loss_func=loss_func,steps_per_epoch=args.steps_per_epoch_val, tb_helper=tb)
+            is_best_epoch = (valid_metric < best_valid_metric) if args.regression_mode or args.hybrid_mode else(valid_metric > best_valid_metric)
 
             if is_best_epoch:
-                if args.hybrid_mode:
-                    best_valid_cat_metric = valid_cat_metric;
-                    best_valid_reg_metric = valid_reg_metric;
-                else:
-                    best_valid_metric = valid_metric;
+                best_valid_metric = valid_metric;
                 if args.model_prefix:
                     shutil.copy2(args.model_prefix + '_epoch-%d_state.pt' %
                                  epoch, args.model_prefix + '_best_epoch_state.pt')
                     torch.save(model, args.model_prefix + '_best_epoch_full.pt')
-            if args.hybrid_mode:
-                _logger.info('Epoch #%d: Current validation metric for classification: %.5f (best: %.5f)' %
-                             (epoch, valid_cat_metric, best_valid_cat_metric), color='bold')
-                _logger.info('Epoch #%d: Current validation metric for regression: %.5f (best: %.5f)' %
-                             (epoch, valid_reg_metric, best_valid_reg_metric), color='bold')
-            else:
-                _logger.info('Epoch #%d: Current validation metric: %.5f (best: %.5f)' %
-                             (epoch, valid_metric, best_valid_metric), color='bold')
+            _logger.info('Epoch #%d: Current validation metric: %.5f (best: %.5f)' %
+
+                         (epoch, valid_metric, best_valid_metric), color='bold')
 
     if args.data_test:
         if training_mode:
@@ -715,17 +698,10 @@ def main(args):
                 from utils.nn.tools import evaluate_onnx
                 test_metric, scores, labels, targets, observers = evaluate_onnx(args.model_prefix, test_loader)
             else:
-                if not args.hybrid_mode:
-                    test_metric, scores, labels, targets, observers = evaluate(model, test_loader, dev, epoch=None, for_training=False, tb_helper=tb)
-                    _logger.info('Test metric %.5f' % test_metric, color='bold')
-                    del test_loader
-                    del test_metric
-                else:
-                    test_cat_metric, test_reg_metric, scores, labels, targets, observers = evaluate(model, test_loader, dev, epoch=None, for_training=False, tb_helper=tb)
-                    _logger.info('Test Classification metric %.5f, Test Regression metric %.5f'%(test_cat_metric,test_reg_metric), color='bold')
-                    del test_loader
-                    del test_cat_metric
-                    del test_reg_metric
+                test_metric, scores, labels, targets, observers = evaluate(model, test_loader, dev, epoch=None, for_training=False, tb_helper=tb)
+                _logger.info('Test metric %.5f' % test_metric, color='bold')
+                del test_loader
+                del test_metric
 
             if args.predict_output:
                 if '/' not in args.predict_output:

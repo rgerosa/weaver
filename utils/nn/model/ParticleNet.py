@@ -247,7 +247,7 @@ class ParticleNetTagger(nn.Module):
                  num_classes,
                  conv_params=[(7, (32, 32, 32)), (7, (64, 64, 64))],
                  fc_params=[(128, 0.1)],
-                 input_point_features=32,
+                 input_dims=32,
                  use_fusion=True,
                  use_fts_bn=True,
                  use_counts=True,
@@ -258,9 +258,9 @@ class ParticleNetTagger(nn.Module):
         super(ParticleNetTagger, self).__init__(**kwargs)
         self.pf_input_dropout = nn.Dropout(pf_input_dropout) if pf_input_dropout else None
         self.sv_input_dropout = nn.Dropout(sv_input_dropout) if sv_input_dropout else None
-        self.pf_conv = FeatureConv(pf_features_dims, input_point_features)
-        self.sv_conv = FeatureConv(sv_features_dims, input_point_features)
-        self.pn = ParticleNet(input_dims=input_point_features,
+        self.pf_conv = FeatureConv(pf_features_dims, input_dims)
+        self.sv_conv = FeatureConv(sv_features_dims, input_dims)
+        self.pn = ParticleNet(input_dims=input_dims,
                               num_classes=num_classes,
                               conv_params=conv_params,
                               fc_params=fc_params,
@@ -292,7 +292,7 @@ class ParticleNetTaggerNoSV(nn.Module):
                  num_classes,
                  conv_params=[(7, (32, 32, 32)), (7, (64, 64, 64))],
                  fc_params=[(128, 0.1)],
-                 input_point_features=32,
+                 input_dims=32,
                  use_fusion=True,
                  use_fts_bn=True,
                  use_counts=True,
@@ -301,8 +301,8 @@ class ParticleNetTaggerNoSV(nn.Module):
                  **kwargs):
         super(ParticleNetTaggerNoSV, self).__init__(**kwargs)
         self.pf_input_dropout = nn.Dropout(pf_input_dropout) if pf_input_dropout else None
-        self.pf_conv = FeatureConv(pf_features_dims, num_point_features)
-        self.pn = ParticleNet(input_dims=num_point_features,
+        self.pf_conv = FeatureConv(pf_features_dims, input_dims)
+        self.pn = ParticleNet(input_dims=input_dims,
                               num_classes=num_classes,
                               conv_params=conv_params,
                               fc_params=fc_params,

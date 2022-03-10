@@ -2,23 +2,27 @@ selection:
    ### use `&`, `|`, `~` for logical operations on numpy arrays
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    >-
-   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (event%7!=0) & (jet_genmatch_pt>0) & (jet_muflav==0) & (jet_elflav==0) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0))
+   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (event%7!=0) & (jet_genmatch_pt>0) & ~((jet_muflav==0) & (jet_elflav==0) & (jet_tauflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_muflav==0) & (jet_elflav==0) & (jet_tauflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_muflav==0) & (jet_elflav==0) & (jet_tauflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0)) & ~((jet_tauflav==1) & (jet_taudecaymode<0)) & ~((jet_tauflav==1) & (jet_taudecaymode>2) & (jet_taudecaymode<10)) & ~((jet_tauflav==1) & (jet_taudecaymode>11))
 
 test_time_selection:
    >-
-   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (event%7==0) & (jet_genmatch_pt>0) & (jet_muflav==0) & (jet_elflav==0) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_tauflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0))
-
+   (np.abs(jet_eta)<2.5) & (jet_pt>=30) & (jet_pt<=1000) & (event%7==0) & (jet_genmatch_pt>0) & ~((jet_muflav==0) & (jet_elflav==0) & (jet_tauflav==0) & (np.abs(jet_pflav)==0) & (jet_hflav==0)) & ~((jet_muflav==0) & (jet_elflav==0) & (jet_tauflav==0) & (np.abs(jet_pflav)==4) & (jet_hflav==0)) & ~((jet_muflav==0) & (jet_elflav==0) & (jet_tauflav==0) & (np.abs(jet_pflav)==5) & (jet_hflav==0)) & ~((jet_tauflav==1) & (jet_taudecaymode<0)) & ~((jet_tauflav==1) & (jet_taudecaymode>2) & (jet_taudecaymode<10)) & ~((jet_tauflav==1) & (jet_taudecaymode>11))
 
 new_variables:
    ### [format] name: formula
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    pfcand_mask: awkward.JaggedArray.ones_like(jet_pfcand_deta)
    sv_mask: awkward.JaggedArray.ones_like(jet_sv_deta)
-   label_tau:  (jet_tauflav==1)
-   label_b:    (jet_tauflav==0) & (jet_hflav==5)
-   label_c:    (jet_tauflav==0) & (jet_hflav==4)
-   label_uds:  (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)>=0) & (np.abs(jet_pflav)<4)
-   label_g:    (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)==21)
+   label_mu:  (jet_muflav==1) & (jet_elflav==0) & (jet_tauflav==0)
+   label_el:  (jet_elflav==1) & (jet_muflav==0) & (jet_tauflav==0)
+   label_tau_1h0p: (jet_tauflav==1) & (jet_taudecaymode==0) & (jet_muflav==0) & (jet_elflav==0)
+   label_tau_1h1or2p: (jet_tauflav==1) & ((jet_taudecaymode==1) | (jet_taudecaymode==2)) & (jet_muflav==0) & (jet_elflav==0)
+   label_tau_3h0p: (jet_tauflav==1) & (jet_taudecaymode==10) & (jet_muflav==0) & (jet_elflav==0)
+   label_tau_3h1p: (jet_tauflav==1) & (jet_taudecaymode==11) & (jet_muflav==0) & (jet_elflav==0)
+   label_b:   (jet_tauflav==0) & (jet_hflav==5) & (jet_muflav==0) & (jet_elflav==0)
+   label_c:   (jet_tauflav==0) & (jet_hflav==4) & (jet_muflav==0) & (jet_elflav==0)
+   label_uds: (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)>=0) & (np.abs(jet_pflav)<4) & (jet_muflav==0) & (jet_elflav==0)
+   label_g:   (jet_tauflav==0) & (jet_hflav==0) & (np.abs(jet_pflav)==21) & (jet_muflav==0) & (jet_elflav==0)
 
 preprocess:
    ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
@@ -99,12 +103,11 @@ inputs:
 labels:
    ### type can be `simple`, `custom`
    ### [option 1] use `simple` for binary/multi-class classification, then `value` is a list of 0-1 labels
-   #type: simple
-   #value: [label_tau, label_b, label_c, label_uds, label_g]
+   type: simple
+   value: [label_mu,label_el,label_tau_1h0p, label_tau_1h1or2p, label_tau_3h0p, label_tau_3h1p, label_b, label_c, label_uds, label_g]
    ### [option 2] otherwise use `custom` to define the label, then `value` is a map
-   type: custom 
-   value: 
-      target_pt : np.clip(jet_genmatch_wnu_pt/jet_pt,0,2)
+   # type: custom
+   # value:
 
 observers:
    - event
@@ -112,8 +115,8 @@ observers:
    - npv
    - wgt
    - met
-   - npu
    - sample
+   - npu
    - jet_pt
    - jet_eta
    - jet_phi
@@ -121,6 +124,10 @@ observers:
    - jet_ncand
    - jet_hflav
    - jet_pflav
+   - jet_tauflav
+   - jet_taudecaymode
+   - jet_muflav
+   - jet_elflav
    - jet_genmatch_pt
    - jet_genmatch_eta
    - jet_genmatch_phi
@@ -140,10 +147,6 @@ observers:
    - jet_pnet_probc
    - jet_pnet_probuds
    - jet_pnet_probg
-   - jet_muflav
-   - jet_elflav
-   - jet_tauflav
-   - jet_taudecaymode
    - jet_taumatch_pt
    - jet_taumatch_eta
    - jet_taumatch_phi
@@ -152,12 +155,7 @@ observers:
    - jet_taumatch_idjet
    - jet_taumatch_idmu
    - jet_taumatch_idele
-   - label_tau
-   - label_b
-   - label_c
-   - label_uds
-   - label_g
-   
+
 monitor_variables:
 
 weights:
@@ -170,7 +168,7 @@ weights:
    reweight_vars:
       jet_pt: [30, 38, 48, 60, 76, 97, 122, 154, 195, 246, 311, 393, 496, 627, 792, 1000]
       jet_eta: [-2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5]
-   reweight_classes: [label_tau, label_b, label_c, label_uds, label_g]
-   class_weights: [1, 1, 1, 1, 1]
+   reweight_classes: [label_mu,label_el,label_tau_1h0p, label_tau_1h1or2p, label_tau_3h0p, label_tau_3h1p, label_b, label_c, label_uds, label_g]
+   class_weights: [1.0, 1.0, 0.30, 0.84, 0.24, 0.12, 1.5, 1.5, 3.0, 5.0]
    reweight_threshold: 15
    reweight_hists:

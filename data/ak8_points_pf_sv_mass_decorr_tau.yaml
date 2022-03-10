@@ -2,24 +2,29 @@ selection:
    ### use `&`, `|`, `~` for logical operations on numpy arrays
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    >-
-   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>=30) & (jet_mass_truth<=200) & (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0) & (event%7!=0) &
-   ((jet_flav_2prong_partonjet_match==-1) | ((jet_flav_2prong_partonjet_match>=4) & (jet_flav_2aprong_partonjet_match<=7)))
+   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>=30) & (jet_mass_truth<=200) & (jet_genmatch_pt>0) & (event%7!=0) & (jet_muflav==0) & (jet_elflav==0) & ~(jet_tauflav==1) &
+   (((jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0)) |
+    ((jet_flav_2prong_partonjet_match>=4)  & (jet_flav_2prong_partonjet_match<=7) & (jet_tauflav==0)) |
+    ((jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==2)))
 
 test_time_selection:
    >-
-   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>=30) & (jet_mass_truth<=200) & (jet_genmatch_pt>0) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0) & (event%7==0) &
-   ((jet_flav_2prong_partonjet_match==-1) | ((jet_flav_2prong_partonjet_match>=4) & (jet_flav_2aprong_partonjet_match<=7)))
+   (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>=30) & (jet_mass_truth<=200) & (jet_genmatch_pt>0) & (event%7==0) & (jet_muflav==0) & (jet_elflav==0) & ~(jet_tauflav==1) &
+   (((jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0)) |
+    ((jet_flav_2prong_partonjet_match>=4)  & (jet_flav_2prong_partonjet_match<=7) & (jet_tauflav==0)) |
+    ((jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==2)))
 
 new_variables:
    ### [format] name: formula
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    pfcand_mask: awkward.JaggedArray.ones_like(jet_pfcand_deta)
    sv_mask: awkward.JaggedArray.ones_like(jet_sv_deta)
-   label_H_bb: (jet_flav_2prong_partonjet_match==7)
-   label_H_cc: (jet_flav_2prong_partonjet_match==6)
-   label_H_qq: (jet_flav_2prong_partonjet_match==5)
-   label_H_gg: (jet_flav_2prong_partonjet_match==4)
-   label_QCD:  (jet_flav_2prong_partonjet_match==-1)
+   label_H_tt: (jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==2)
+   label_H_bb: (jet_flav_2prong_partonjet_match==7)  & (jet_tauflav==0)
+   label_H_cc: (jet_flav_2prong_partonjet_match==6)  & (jet_tauflav==0)
+   label_H_qq: (jet_flav_2prong_partonjet_match==5)  & (jet_tauflav==0)
+   label_H_gg: (jet_flav_2prong_partonjet_match==4)  & (jet_tauflav==0)
+   label_QCD:  (jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0)
 
 preprocess:
    ### method: [manual, auto] - whether to use manually specified parameters for variable standardization
@@ -66,6 +71,7 @@ inputs:
          - [jet_pfcand_trackjet_decayL, 0, 65]
          - [jet_pfcand_npixhits, 0, 0.1]
          - [jet_pfcand_nstriphits, 0, 0.1]
+         - [jet_pfcand_id, 4, 0.2]
          - [jet_pfcand_hcalfraction, null]
          - [jet_pfcand_calofraction, null]
    pf_mask:
@@ -100,7 +106,7 @@ labels:
    ### type can be `simple`, `custom`
    ### [option 1] use `simple` for binary/multi-class classification, then `value` is a list of 0-1 labels
    type: simple
-   value: [label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD]
+   value: [label_H_tt, label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD]
    ### [option 2] otherwise use `custom` to define the label, then `value` is a map
    # type: custom
    # value:
@@ -117,10 +123,10 @@ observers:
    - jet_eta
    - jet_phi
    - jet_mass
-   - jet_ncand
    - jet_softdrop_mass
-   - jet_regression_mass
    - jet_softdrop_genmatch_mass
+   - jet_regression_mass
+   - jet_ncand
    - jet_pt_truth
    - jet_eta_truth
    - jet_phi_truth
@@ -154,7 +160,7 @@ weights:
    reweight_vars:
       jet_pt: [250, 315, 396, 499, 628, 791, 995, 1253, 1577, 1987, 2500]
       jet_mass_truth: [25, 45, 65, 85, 105, 125, 145, 165, 185, 205]
-   reweight_classes: [label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD]
-   class_weights: [1, 1, 1, 1, 1]
+   reweight_classes: [label_H_tt, label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD]
+   class_weights: [1.0, 1.5, 1.5, 1.5, 1.5, 1.5]
    reweight_threshold: 15
    reweight_hists:

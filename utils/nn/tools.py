@@ -751,12 +751,12 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
             ['    - %s: \n%s' % (k, str(v)) for k, v in metric_reg_results.items()]))        
 
     if for_training:
-        return total_correct / count, total_reg_loss / count
+        return total_loss / count;
     else:
         observers = {k: _concat(v) for k, v in observers.items()}
         scores_reg = scores_reg.reshape(len(scores_reg),len(data_config.target_names))
         scores = np.concatenate((scores_cat,scores_reg),axis=1)
-        return total_correct / count, total_reg_loss / count, scores, labels, targets, observers
+        return total_loss / count, scores, labels, targets, observers
 
 class TensorboardHelper(object):
 
