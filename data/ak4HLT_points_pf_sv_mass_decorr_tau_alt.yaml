@@ -158,6 +158,14 @@ observers:
    - jet_recomatch_pnet_probc
    - jet_recomatch_pnet_probuds
    - jet_recomatch_pnet_probg
+   - jet_taumatch_pt
+   - jet_taumatch_eta
+   - jet_taumatch_phi
+   - jet_taumatch_mass
+   - jet_taumatch_decaymode
+   - jet_taumatch_idjet
+   - jet_taumatch_idmu
+   - jet_taumatch_idele
 
 monitor_variables:
 
