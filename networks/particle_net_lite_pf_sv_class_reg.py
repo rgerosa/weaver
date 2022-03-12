@@ -30,10 +30,10 @@ def get_model(data_config, **kwargs):
     num_classes = len(data_config.label_value)+len(data_config.target_value)
     model = ParticleNetTagger(pf_features_dims, 
                               sv_features_dims, 
-                              input_dims=point_features,
                               num_classes,
                               conv_params, 
                               fc_params,
+                              input_dims=point_features,
                               use_fusion=use_fusion,
                               use_fts_bn=kwargs.get('use_fts_bn', False),
                               use_counts=kwargs.get('use_counts', True),
