@@ -161,7 +161,6 @@ observers:
    - jet_recomatch_pnet_probc
    - jet_recomatch_pnet_probuds
    - jet_recomatch_pnet_probg
-   - jet_recomatch_pnet_bvsqg
 
 monitor_variables:
 
