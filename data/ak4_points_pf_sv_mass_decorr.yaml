@@ -115,6 +115,11 @@ observers:
    - jet_eta
    - jet_phi
    - jet_mass
+   - jet_chf
+   - jet_nhf
+   - jet_phf
+   - jet_elf
+   - jet_muf
    - jet_ncand
    - jet_hflav
    - jet_pflav
