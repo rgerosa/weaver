@@ -118,6 +118,11 @@ observers:
    - jet_phi
    - jet_mass
    - jet_ncand
+   - jet_chf
+   - jet_nhf
+   - jet_phf
+   - jet_elf
+   - jet_muf
    - jet_softdrop_mass
    - jet_regression_mass
    - jet_softdrop_genmatch_mass
