@@ -482,7 +482,7 @@ def train_hybrid(model, loss_func, opt, scheduler, train_loader, dev, epoch, ste
                 if idx == 0:
                     target = y[names].float();
                 else:
-                    target = torch.stack((target,y[names].float()),dim=1)
+                    target = torch.column_stack((target,y[names].float()))
             target = target.to(dev)            
             ### Number of samples in the batch
             num_examples = max(label.shape[0],target.shape[0]);
@@ -637,7 +637,7 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
                     if idx == 0:
                         target = y[names].float();
                     else:
-                        target = torch.stack((target,y[names].float()),dim=1)
+                        target = torch.column_stack((target,y[names].float()))
                 target = target.to(dev)            
                 ### update counters
                 num_examples = max(label.shape[0],target.shape[0]);
