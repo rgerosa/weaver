@@ -11,8 +11,7 @@ def get_model(data_config, **kwargs):
     fc_params = [
         (256, 0.1),
         (128, 0.1),
-        (64, 0.1),
-        (32, 0.1)
+        (64, 0.1)
     ]
     use_fusion = True
 
@@ -24,7 +23,7 @@ def get_model(data_config, **kwargs):
                               num_classes,
                               conv_params, 
                               fc_params,
-                              input_dims=64,
+                              input_dims=48,
                               use_fusion=use_fusion,
                               use_fts_bn=kwargs.get('use_fts_bn', False),
                               use_counts=kwargs.get('use_counts', True),
