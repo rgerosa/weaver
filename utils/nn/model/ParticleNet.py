@@ -64,11 +64,12 @@ class EdgeConvBlock(nn.Module):
         Whether to include batch normalization on messages.
     """
 
-    def __init__(self, k, in_feat, out_feats, batch_norm=True, activation=True, cpu_mode=False):
+    def __init__(self, k, in_feat, out_feats, batch_norm=True, activation=True, cpu_mode=False, attention=False):
         super(EdgeConvBlock, self).__init__()
         self.k = k
         self.batch_norm = batch_norm
         self.activation = activation
+        self.attention  = attention
         self.num_layers = len(out_feats)
         self.get_graph_feature = get_graph_feature_v2 if cpu_mode else get_graph_feature_v1
 
@@ -85,6 +86,12 @@ class EdgeConvBlock(nn.Module):
             self.acts = nn.ModuleList()
             for i in range(self.num_layers):
                 self.acts.append(nn.ReLU())
+
+        if attention:
+            self.attmlp = nn.Sequential(
+                nn.Conv1d(out_feats[self.num_layers],out_feats[self.num_layers],kernel_size=1,bias=False if self.batch_norm else True),
+                nn.BatchNorm1d(out_feats[self.num_layers]),
+                nn.ReLU())
 
         if in_feat == out_feats[-1]:
             self.sc = None
@@ -106,9 +113,14 @@ class EdgeConvBlock(nn.Module):
                 x = bn(x)
             if act:
                 x = act(x)
-
-        fts = x.mean(dim=-1)  # (N, C, P)
-
+        
+        if not self.attention:
+            fts = x.mean(dim=-1)  # (N, C, P)
+        else:
+            fts = self.attmlp(x);
+            fts = torch.nn.Softmax(fts,dim=-1);
+            fts = torch.mm(x,fts).sum(dim=-1);
+            
         # shortcut
         if self.sc:
             sc = self.sc(features)  # (N, C_out, P)
@@ -129,6 +141,7 @@ class ParticleNet(nn.Module):
                  use_fusion=True,
                  use_fts_bn=True,
                  use_counts=True,
+                 use_attention=False,
                  for_inference=False,
                  for_segmentation=False,
                  **kwargs):
@@ -139,6 +152,7 @@ class ParticleNet(nn.Module):
             self.bn_fts = nn.BatchNorm1d(input_dims)
 
         self.use_counts = use_counts
+        self.use_attention = use_attention
 
         self.edge_convs = nn.ModuleList()
         for idx, layer_param in enumerate(conv_params):
@@ -180,6 +194,12 @@ class ParticleNet(nn.Module):
         else:            
             fcs.append(nn.Linear(fc_params[-1][0], num_classes))
 
+        if self.use_attention:
+            self.attmlp = nn.Sequential(
+                nn.Conv1d(out_chn, out_chn, kernel_size=1, bias=False),
+                nn.BatchNorm1d(out_chn),
+                nn.ReLU())
+
         self.fc = nn.Sequential(*fcs)
         self.for_inference = for_inference
 
@@ -211,11 +231,16 @@ class ParticleNet(nn.Module):
         if self.for_segmentation:
             x = fts
         else:
-            if self.use_counts:
-                x = fts.sum(dim=-1) / counts  # divide by the real counts
+            if not self.use_attention:
+                if self.use_counts:
+                    x = fts.sum(dim=-1) / counts  # divide by the real counts
+                else:
+                    x = fts.mean(dim=-1)
             else:
-                x = fts.mean(dim=-1)
-
+                x = self.attmlp(fts);
+                x = torch.nn.Softmax(x,dim=-1);
+                x = torch.mm(x,fts).sum(dim=-1) / counts;
+                
         output = self.fc(x)
 
         if self.for_inference:
@@ -251,6 +276,7 @@ class ParticleNetTagger(nn.Module):
                  use_fusion=True,
                  use_fts_bn=True,
                  use_counts=True,
+                 use_attention=False,
                  pf_input_dropout=None,
                  sv_input_dropout=None,
                  for_inference=False,
@@ -267,6 +293,7 @@ class ParticleNetTagger(nn.Module):
                               use_fusion=use_fusion,
                               use_fts_bn=use_fts_bn,
                               use_counts=use_counts,
+                              use_attention=use_attention,
                               for_inference=for_inference)
 
     def forward(self, pf_points, pf_features, pf_mask, sv_points, sv_features, sv_mask):
@@ -285,40 +312,3 @@ class ParticleNetTagger(nn.Module):
         return self.pn(points, features, mask)
 
 
-class ParticleNetTaggerNoSV(nn.Module):
-
-    def __init__(self,
-                 pf_features_dims,
-                 num_classes,
-                 conv_params=[(7, (32, 32, 32)), (7, (64, 64, 64))],
-                 fc_params=[(128, 0.1)],
-                 input_dims=32,
-                 use_fusion=True,
-                 use_fts_bn=True,
-                 use_counts=True,
-                 pf_input_dropout=None,
-                 for_inference=False,
-                 **kwargs):
-        super(ParticleNetTaggerNoSV, self).__init__(**kwargs)
-        self.pf_input_dropout = nn.Dropout(pf_input_dropout) if pf_input_dropout else None
-        self.pf_conv = FeatureConv(pf_features_dims, input_dims)
-        self.pn = ParticleNet(input_dims=input_dims,
-                              num_classes=num_classes,
-                              conv_params=conv_params,
-                              fc_params=fc_params,
-                              use_fusion=use_fusion,
-                              use_fts_bn=use_fts_bn,
-                              use_counts=use_counts,
-                              for_inference=for_inference)
-
-    def forward(self, pf_points, pf_features, pf_mask):
-
-        if self.pf_input_dropout:
-            pf_mask       = (self.pf_input_dropout(pf_mask) != 0).float()
-            pf_points    *= pf_mask
-            pf_features  *= pf_mask
-
-        points   = pf_points;
-        features = self.pf_conv(pf_features * pf_mask) * pf_mask;
-        mask     = pf_mask;
-        return self.pn(points, features, mask)
