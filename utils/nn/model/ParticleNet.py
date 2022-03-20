@@ -88,9 +88,9 @@ class EdgeConvBlock(nn.Module):
                 self.acts.append(nn.ReLU())
 
         if attention:
-            self.attmlp = nn.Sequential(
-                nn.Conv1d(out_feats[self.num_layers],out_feats[self.num_layers],kernel_size=1,bias=False if self.batch_norm else True),
-                nn.BatchNorm1d(out_feats[self.num_layers]),
+            self.atts = nn.Sequential(
+                nn.Conv2d(out_feats[-1],out_feats[-1],kernel_size=1,bias=False if self.batch_norm else True),
+                nn.BatchNorm2d(out_feats[-1]),
                 nn.ReLU())
 
         if in_feat == out_feats[-1]:
@@ -117,7 +117,7 @@ class EdgeConvBlock(nn.Module):
         if not self.attention:
             fts = x.mean(dim=-1)  # (N, C, P)
         else:
-            fts = self.attmlp(x);
+            fts = self.atts(x);
             fts = torch.softmax(fts,dim=-1);
             fts = torch.mul(x,fts).sum(dim=-1);
             
@@ -158,7 +158,7 @@ class ParticleNet(nn.Module):
         for idx, layer_param in enumerate(conv_params):
             k, channels = layer_param
             in_feat = input_dims if idx == 0 else conv_params[idx - 1][1][-1]
-            self.edge_convs.append(EdgeConvBlock(k=k, in_feat=in_feat, out_feats=channels, cpu_mode=for_inference))
+            self.edge_convs.append(EdgeConvBlock(k=k, in_feat=in_feat, out_feats=channels, cpu_mode=for_inference,attention=self.use_attention))
 
         self.use_fusion = use_fusion
         if self.use_fusion:
@@ -195,7 +195,7 @@ class ParticleNet(nn.Module):
             fcs.append(nn.Linear(fc_params[-1][0], num_classes))
 
         if self.use_attention:
-            self.attmlp = nn.Sequential(
+            self.attention_pooling = nn.Sequential(
                 nn.Conv1d(out_chn, out_chn, kernel_size=1, bias=False),
                 nn.BatchNorm1d(out_chn),
                 nn.ReLU())
@@ -237,7 +237,7 @@ class ParticleNet(nn.Module):
                 else:
                     x = fts.mean(dim=-1)
             else:
-                x = self.attmlp(fts);
+                x = self.attention_pooling(fts);
                 x = torch.softmax(x,dim=-1);
                 x = torch.mul(x,fts).sum(dim=-1) / counts;
                 
