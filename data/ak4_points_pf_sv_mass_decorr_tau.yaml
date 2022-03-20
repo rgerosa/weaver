@@ -156,6 +156,16 @@ observers:
    - jet_taumatch_idjet
    - jet_taumatch_idmu
    - jet_taumatch_idele
+   - jet_taumatch_dxy
+   - jet_taumatch_dz
+   - jet_taumatch_idjet_wpvvloose
+   - jet_taumatch_idjet_wpvloose
+   - jet_taumatch_idjet_wploose
+   - jet_taumatch_idele_wpvvloose
+   - jet_taumatch_idele_wpvloose
+   - jet_taumatch_idele_wploose
+   - jet_taumatch_idmu_wpvloose
+   - jet_taumatch_idmu_wploose
    
 monitor_variables:
 
