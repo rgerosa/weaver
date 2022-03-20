@@ -118,8 +118,8 @@ class EdgeConvBlock(nn.Module):
             fts = x.mean(dim=-1)  # (N, C, P)
         else:
             fts = self.attmlp(x);
-            fts = torch.nn.Softmax(fts,dim=-1);
-            fts = torch.mm(x,fts).sum(dim=-1);
+            fts = torch.softmax(fts,dim=-1);
+            fts = torch.mul(x,fts).sum(dim=-1);
             
         # shortcut
         if self.sc:
@@ -238,8 +238,8 @@ class ParticleNet(nn.Module):
                     x = fts.mean(dim=-1)
             else:
                 x = self.attmlp(fts);
-                x = torch.nn.Softmax(x,dim=-1);
-                x = torch.mm(x,fts).sum(dim=-1) / counts;
+                x = torch.softmax(x,dim=-1);
+                x = torch.mul(x,fts).sum(dim=-1) / counts;
                 
         output = self.fc(x)
 
