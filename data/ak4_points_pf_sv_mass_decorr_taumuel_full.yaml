@@ -165,7 +165,7 @@ observers:
    - jet_taumatch_idjet_wpvvloose
    - jet_taumatch_idjet_wpvloose
    - jet_taumatch_idjet_wploose
-   - jet_taumatch_idele_wpvvlose
+   - jet_taumatch_idele_wpvvloose
    - jet_taumatch_idele_wpvloose
    - jet_taumatch_idele_wploose
    - jet_taumatch_idmu_wpvloose
