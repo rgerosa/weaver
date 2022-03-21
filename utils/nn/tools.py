@@ -625,6 +625,7 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
     with torch.no_grad():
         with tqdm.tqdm(test_loader) as tq:
             for X, y, Z in tq:
+                if count > 0: break;
                 ### input features for the model
                 inputs = [X[k].to(dev) for k in data_config.input_names]
                 ### build classification true labels
@@ -646,7 +647,8 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
                 model_output = model(*inputs)
                 ### apply soft-max to classification outputs
                 pred_cat_output = model_output[:,:len(data_config.label_value)].squeeze().float()
-                _,pred_cat = pred_cat_output.max(1);
+                print(pred_cat_output.shape);
+                _, pred_cat = pred_cat_output.max(1);
                 scores_cat.append(torch.softmax(pred_cat_output,dim=1).detach().cpu().numpy());
                 for k, name in enumerate(data_config.label_names):                    
                     labels[name].append(_flatten_label(y[name],None).cpu().numpy())
