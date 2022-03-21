@@ -646,7 +646,7 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
                 model_output = model(*inputs)
                 ### apply soft-max to classification outputs
                 pred_cat_output = model_output[:,:len(data_config.label_value)].squeeze().float()
-                _logger.info('shape output %s '%(pred_cat_output.shape));
+                _logger.info('shape output '+str(pred_cat_output.shape));
                 _, pred_cat = pred_cat_output.max(1);
                 scores_cat.append(torch.softmax(pred_cat_output,dim=1).detach().cpu().numpy());
                 for k, name in enumerate(data_config.label_names):                    
