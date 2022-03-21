@@ -527,6 +527,7 @@ def train_hybrid(model, loss_func, opt, scheduler, train_loader, dev, epoch, ste
             count += num_examples;
             
             ## take the classification prediction and compare with the true labels
+            if(loss_input.dim() == 1) : continue;
             _, pred_cat = loss_input[:,:len(data_config.label_value)].squeeze().max(1);
             correct = (pred_cat == label).sum().item()
             total_correct += correct
@@ -646,7 +647,7 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
                 model_output = model(*inputs)
                 ### apply soft-max to classification outputs
                 pred_cat_output = model_output[:,:len(data_config.label_value)].squeeze().float()
-                _logger.info('shape output '+str(pred_cat_output.shape));
+                if(pred_cat_output.dim() == 1) : continue;
                 _, pred_cat = pred_cat_output.max(1);
                 scores_cat.append(torch.softmax(pred_cat_output,dim=1).detach().cpu().numpy());
                 for k, name in enumerate(data_config.label_names):                    
