@@ -645,22 +645,29 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
                 entry_count += num_examples
                 ### evaluate model
                 model_output = model(*inputs)
-                ### apply soft-max to classification outputs
-                pred_cat_output = model_output[:,:len(data_config.label_value)].squeeze().float()
-                if(pred_cat_output.dim() == 1) : continue;
-                _, pred_cat = pred_cat_output.max(1);
-                scores_cat.append(torch.softmax(pred_cat_output,dim=1).detach().cpu().numpy());
+                ### define truth labels for classification and regression
                 for k, name in enumerate(data_config.label_names):                    
                     labels[name].append(_flatten_label(y[name],None).cpu().numpy())
-                ### regression output
-                pred_reg = model_output[:,len(data_config.label_value):len(data_config.label_value)+len(data_config.target_value)].squeeze().float();                
-                scores_reg.append(pred_reg.detach().cpu().numpy())
                 for k, name in enumerate(data_config.target_names):
-                    targets[name].append(y[name].cpu().numpy())
+                    targets[name].append(y[name].cpu().numpy())                
                 ### observers
                 if not for_training:
                     for k, v in Z.items():
                         observers[k].append(v.cpu().numpy())
+                ### build classification and regression outputs
+                pred_cat_output = model_output[:,:len(data_config.label_value)].squeeze().float()
+                pred_reg        = model_output[:,len(data_config.label_value):len(data_config.label_value)+len(data_config.target_value)].squeeze().float();                
+                if pred_cat_output.shape[0] == num_examples and pred_reg.shape[0] == num_examples:
+                    _, pred_cat = pred_cat_output.max(1);
+                    scores_cat.append(torch.softmax(pred_cat_output,dim=1).detach().cpu().numpy());
+                    scores_reg.append(pred_reg.detach().cpu().numpy())
+                else:
+                    scores_cat.append(torch.zeros(num_examples,len(data_config.label_value)).cpu().numpy());
+                    if len(data_config.target_value) > 1:
+                        scores_reg.append(torch.zeros(num_examples,len(data_config.target_value)).cpu().numpy());
+                    else:
+                        scores_reg.append(torch.zeros(num_examples).cpu().numpy());
+
                 ### evaluate loss function
                 loss,loss_cat,loss_reg = 0,0,0;
                 if loss_func != None:
@@ -734,23 +741,27 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
             with torch.no_grad():
                 tb_helper.custom_fn(model_output=model_output, model=model, epoch=epoch, i_batch=-1, mode=tb_mode)
 
-    scores_cat = np.concatenate(scores_cat).squeeze()
-    scores_reg = np.concatenate(scores_reg).squeeze()
+    if not scores_cat:
+        scores_cat = np.concatenate(scores_cat).squeeze()
+    if not scores_reg:
+        scores_reg = np.concatenate(scores_reg).squeeze()
     labels  = {k: _concat(v) for k, v in labels.items()}
     targets = {k: _concat(v) for k, v in targets.items()}
     
-    metric_cat_results = evaluate_metrics(labels[data_config.label_names[0]], scores_cat, eval_metrics=eval_cat_metrics)    
-    _logger.info('Evaluation Classification metrics: \n%s', '\n'.join(
-        ['    - %s: \n%s' % (k, str(v)) for k, v in metric_cat_results.items()]))
+    if not scores_cat:
+        metric_cat_results = evaluate_metrics(labels[data_config.label_names[0]], scores_cat, eval_metrics=eval_cat_metrics)    
+        _logger.info('Evaluation Classification metrics: \n%s', '\n'.join(
+            ['    - %s: \n%s' % (k, str(v)) for k, v in metric_cat_results.items()]))
 
-    for idx, (name,element) in enumerate(targets.items()):
-        if len(data_config.target_names) == 1:
-            metric_reg_results = evaluate_metrics(element, scores_reg, eval_metrics=eval_reg_metrics)
-        else:
-            metric_reg_results = evaluate_metrics(element, scores_reg[:,idx], eval_metrics=eval_reg_metrics)
+    if not scores_reg:
+        for idx, (name,element) in enumerate(targets.items()):
+            if len(data_config.target_names) == 1:
+                metric_reg_results = evaluate_metrics(element, scores_reg, eval_metrics=eval_reg_metrics)
+            else:
+                metric_reg_results = evaluate_metrics(element, scores_reg[:,idx], eval_metrics=eval_reg_metrics)
 
-        _logger.info('Evaluation Regression metrics for '+name+' target: \n%s', '\n'.join(
-            ['    - %s: \n%s' % (k, str(v)) for k, v in metric_reg_results.items()]))        
+            _logger.info('Evaluation Regression metrics for '+name+' target: \n%s', '\n'.join(
+                ['    - %s: \n%s' % (k, str(v)) for k, v in metric_reg_results.items()]))        
 
     if for_training:
         return total_loss / count;
@@ -758,6 +769,7 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
         observers = {k: _concat(v) for k, v in observers.items()}
         scores_reg = scores_reg.reshape(len(scores_reg),len(data_config.target_names))
         scores = np.concatenate((scores_cat,scores_reg),axis=1)
+
         return total_loss / count, scores, labels, targets, observers
 
 class TensorboardHelper(object):
