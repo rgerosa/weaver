@@ -696,6 +696,7 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
 
                 ### classification accuracy
                 if pred_cat_output.shape[0] == num_examples and pred_reg.shape[0] == num_examples:
+
                     correct = (pred_cat == label).sum().item()
                     total_correct += correct
                     ### regression spread
@@ -705,17 +706,17 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
                     sqr_err = residual_reg.square().sum().item()
                     sum_sqr_err += sqr_err
 
-                ### monitor results
-                tq.set_postfix({
-                    'Loss': '%.5f' % loss,
-                    'AvgLoss': '%.5f' % (total_loss / num_batches),
-                    'Acc': '%.5f' % (correct / num_examples),
-                    'AvgAcc': '%.5f' % (total_correct / count),
-                    'MSE': '%.5f' % (sqr_err / num_examples),
-                    'AvgMSE': '%.5f' % (sum_sqr_err / count),
-                    'MAE': '%.5f' % (abs_err / num_examples),
-                    'AvgMAE': '%.5f' % (sum_abs_err / count),                        
-                })
+                    ### monitor results
+                    tq.set_postfix({
+                        'Loss': '%.5f' % loss,
+                        'AvgLoss': '%.5f' % (total_loss / num_batches),
+                        'Acc': '%.5f' % (correct / num_examples),
+                        'AvgAcc': '%.5f' % (total_correct / count),
+                        'MSE': '%.5f' % (sqr_err / num_examples),
+                        'AvgMSE': '%.5f' % (sum_sqr_err / count),
+                        'MAE': '%.5f' % (abs_err / num_examples),
+                        'AvgMAE': '%.5f' % (sum_abs_err / count),                        
+                    })
 
                 if tb_helper:
                     if tb_helper.custom_fn:
