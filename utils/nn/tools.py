@@ -695,14 +695,16 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
                 count += num_examples
 
                 ### classification accuracy
-                correct = (pred_cat == label).sum().item()
-                total_correct += correct
-                ### regression spread
-                residual_reg = pred_reg - target;
-                abs_err = residual_reg.abs().sum().item();
-                sum_abs_err += abs_err;
-                sqr_err = residual_reg.square().sum().item()
-                sum_sqr_err += sqr_err
+                if pred_cat_output.shape[0] == num_examples and pred_reg.shape[0] == num_examples:
+                    correct = (pred_cat == label).sum().item()
+                    total_correct += correct
+                    ### regression spread
+                    residual_reg = pred_reg - target;
+                    abs_err = residual_reg.abs().sum().item();
+                    sum_abs_err += abs_err;
+                    sqr_err = residual_reg.square().sum().item()
+                    sum_sqr_err += sqr_err
+
                 ### monitor results
                 tq.set_postfix({
                     'Loss': '%.5f' % loss,
