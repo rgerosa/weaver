@@ -662,12 +662,13 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
                     scores_cat.append(torch.softmax(pred_cat_output,dim=1).detach().cpu().numpy());
                     scores_reg.append(pred_reg.detach().cpu().numpy())
                 else:
+                    pred_cat = torch.zeros(num_examples).detach().cpu().numpy();
                     scores_cat.append(torch.zeros(num_examples,len(data_config.label_value)).cpu().numpy());
                     if len(data_config.target_value) > 1:
                         scores_reg.append(torch.zeros(num_examples,len(data_config.target_value)).cpu().numpy());
                     else:
                         scores_reg.append(torch.zeros(num_examples).cpu().numpy());
-
+                    
                 ### evaluate loss function
                 loss,loss_cat,loss_reg = 0,0,0;
                 if loss_func != None:

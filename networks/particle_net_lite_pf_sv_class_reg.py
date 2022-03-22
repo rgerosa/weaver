@@ -7,7 +7,7 @@ from utils.nn.model.ParticleNet import ParticleNetTagger
 def get_model(data_config, **kwargs):
 
     ## input numer of point features to EdgeConvBlock
-    point_features = 48;
+    point_features = 64;
     ## convoluational layers in EdgeConvBlock and kNN
     conv_params = [
         (16, (96, 96, 96)),
@@ -21,7 +21,7 @@ def get_model(data_config, **kwargs):
         (256, 0.1),
         (128, 0.1),
         (64, 0.1),
-        (48, 0.1)
+        (32, 0.1)
     ]
 
     ## classes and features
