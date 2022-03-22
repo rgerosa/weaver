@@ -626,6 +626,7 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
     with torch.no_grad():
         with tqdm.tqdm(test_loader) as tq:
             for X, y, Z in tq:
+                if num_batches > 1: break;
                 ### input features for the model
                 inputs = [X[k].to(dev) for k in data_config.input_names]
                 ### build classification true labels
@@ -741,27 +742,23 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
             with torch.no_grad():
                 tb_helper.custom_fn(model_output=model_output, model=model, epoch=epoch, i_batch=-1, mode=tb_mode)
 
-    if not scores_cat:
-        scores_cat = np.concatenate(scores_cat).squeeze()
-    if not scores_reg:
-        scores_reg = np.concatenate(scores_reg).squeeze()
+    scores_cat = np.concatenate(scores_cat).squeeze()
+    scores_reg = np.concatenate(scores_reg).squeeze()
     labels  = {k: _concat(v) for k, v in labels.items()}
     targets = {k: _concat(v) for k, v in targets.items()}
     
-    if not scores_cat:
-        metric_cat_results = evaluate_metrics(labels[data_config.label_names[0]], scores_cat, eval_metrics=eval_cat_metrics)    
-        _logger.info('Evaluation Classification metrics: \n%s', '\n'.join(
-            ['    - %s: \n%s' % (k, str(v)) for k, v in metric_cat_results.items()]))
+    metric_cat_results = evaluate_metrics(labels[data_config.label_names[0]], scores_cat, eval_metrics=eval_cat_metrics)    
+    _logger.info('Evaluation Classification metrics: \n%s', '\n'.join(
+        ['    - %s: \n%s' % (k, str(v)) for k, v in metric_cat_results.items()]))
 
-    if not scores_reg:
-        for idx, (name,element) in enumerate(targets.items()):
-            if len(data_config.target_names) == 1:
-                metric_reg_results = evaluate_metrics(element, scores_reg, eval_metrics=eval_reg_metrics)
-            else:
-                metric_reg_results = evaluate_metrics(element, scores_reg[:,idx], eval_metrics=eval_reg_metrics)
+    for idx, (name,element) in enumerate(targets.items()):
+        if len(data_config.target_names) == 1:
+            metric_reg_results = evaluate_metrics(element, scores_reg, eval_metrics=eval_reg_metrics)
+        else:
+            metric_reg_results = evaluate_metrics(element, scores_reg[:,idx], eval_metrics=eval_reg_metrics)
 
-            _logger.info('Evaluation Regression metrics for '+name+' target: \n%s', '\n'.join(
-                ['    - %s: \n%s' % (k, str(v)) for k, v in metric_reg_results.items()]))        
+        _logger.info('Evaluation Regression metrics for '+name+' target: \n%s', '\n'.join(
+            ['    - %s: \n%s' % (k, str(v)) for k, v in metric_reg_results.items()]))        
 
     if for_training:
         return total_loss / count;
