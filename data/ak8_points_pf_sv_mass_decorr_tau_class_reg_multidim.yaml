@@ -114,8 +114,8 @@ targets:
    value:
       target_mass: np.clip(np.maximum(1,jet_mass_regression_truth)/np.maximum(1,jet_mass),0,3)
       target_pt: np.clip(jet_pt_regression_truth/jet_pt,0,4)
-      target_eta : np.clip(jet_pt_regression_eta/jet_eta,-1,3)
-      target_phi : np.clip(jet_pt_regression_phi/jet_phi,-1,3)
+      target_eta: np.clip(jet_eta_regression_truth/jet_eta,-1,3)
+      target_phi: np.clip(jet_phi_regression_truth/jet_phi,-1,3)
 
 observers:
    - event
