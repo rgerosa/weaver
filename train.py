@@ -703,7 +703,7 @@ def main(args):
                 del test_loader
                 del test_metric
 
-            if args.predict_output:
+            if args.predict_output and scores.ndim:
                 if '/' not in args.predict_output:
                     args.predict_output = os.path.join(
                         os.path.dirname(args.model_prefix),

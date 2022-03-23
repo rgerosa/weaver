@@ -626,6 +626,7 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
     with torch.no_grad():
         with tqdm.tqdm(test_loader) as tq:
             for X, y, Z in tq:
+                if num_batches > 1: break;
                 ### input features for the model
                 inputs = [X[k].to(dev) for k in data_config.input_names]
                 ### build classification true labels
@@ -767,11 +768,13 @@ def evaluate_hybrid(model, test_loader, dev, epoch, for_training=True, loss_func
         return total_loss / count;
     else:
         observers = {k: _concat(v) for k, v in observers.items()}
-        scores_reg = scores_reg.reshape(len(scores_reg),len(data_config.target_names))
-        scores = np.concatenate((scores_cat,scores_reg),axis=1)
-
-        return total_loss / count, scores, labels, targets, observers
-
+        if scores_reg.ndim and scores_cat.ndim: 
+            scores_reg = scores_reg.reshape(len(scores_reg),len(data_config.target_names))
+            scores = np.concatenate((scores_cat,scores_reg),axis=1)
+            return total_loss / count, scores, labels, targets, observers
+        else:
+            return total_loss / count, scores_reg, labels, targets, observers
+                    
 class TensorboardHelper(object):
 
     def __init__(self, tb_comment, tb_custom_fn):
