@@ -137,6 +137,10 @@ observers:
    - jet_genmatch_wnu_eta
    - jet_genmatch_wnu_phi
    - jet_genmatch_wnu_mass
+   - jet_genmatch_lep_pt
+   - jet_genmatch_lep_eta
+   - jet_genmatch_lep_phi
+   - jet_genmatch_lep_mass
    - jet_deepcsv_probb
    - jet_deepcsv_probc
    - jet_deepcsv_probudsg
@@ -166,6 +170,21 @@ observers:
    - jet_taumatch_idele_wploose
    - jet_taumatch_idmu_wpvloose
    - jet_taumatch_idmu_wploose
+   - jet_mumatch_pt
+   - jet_mumatch_eta
+   - jet_mumatch_phi
+   - jet_mumatch_mass
+   - jet_mumatch_dxy
+   - jet_mumatch_dz
+   - jet_mumatch_id
+   - jet_mumatch_iso
+   - jet_elematch_pt
+   - jet_elematch_eta
+   - jet_elematch_phi
+   - jet_elematch_mass
+   - jet_elematch_dxy
+   - jet_elematch_dz
+   - jet_elematch_id
 
 monitor_variables:
 
