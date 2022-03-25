@@ -7,15 +7,14 @@ from utils.nn.model.ParticleNet import ParticleNetTagger
 
 def get_model(data_config, **kwargs):
     conv_params = [
-        (16, (96, 96, 96)),
-        (16, (128, 128, 128)),
-        (16, (160, 160, 160)),
-        ]
+        (16, (160, 128, 96)),
+        (12, (160, 128, 96)),
+        (8,  (160, 128, 96)),
+    ]
     fc_params = [
         (128, 0.1),
         (96, 0.1),
-        (64, 0.1),
-        (48, 0.1)
+        (64, 0.1)
     ]
     use_fusion = True
 
@@ -63,5 +62,3 @@ class LogCoshLoss(torch.nn.L1Loss):
 
 def get_loss(data_config, **kwargs):
     return LogCoshLoss(reduction='mean');
-    #return torch.nn.HuberLoss(reduction='mean',delta=kwargs.get('delta',1.0));
-    #return torch.nn.MSELoss(reduction='mean');

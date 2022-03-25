@@ -4,15 +4,15 @@ from utils.nn.model.ParticleNet import ParticleNetTagger
 
 def get_model(data_config, **kwargs):
     conv_params = [
-        (16, (96, 96, 96)),
-        (16, (160, 160, 160)),
-        (16, (256, 256, 256)),
+        (24, (256, 192, 128)),
+        (16, (256, 192, 128)),
+        (8,  (256, 192, 128)),
         ]
     fc_params = [
         (256, 0.1),
+        (192, 0.1),
         (128, 0.1),
-        (64, 0.1),
-        (48, 0.1)
+        (64, 0.1)
     ]
     use_fusion = True
 
