@@ -19,6 +19,7 @@ def get_model(data_config, **kwargs):
     ## fully connected output layers
     fc_params = [
         (192, 0.1),
+        (160, 0.1),
         (128, 0.1),
         (96, 0.1),
         (64, 0.1)
