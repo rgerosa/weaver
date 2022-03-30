@@ -71,7 +71,7 @@ inputs:
          - [jet_pfcand_trackjet_decayL, 0, 65]
          - [jet_pfcand_npixhits, 0, 0.1]
          - [jet_pfcand_nstriphits, 0, 0.1]
-         - [jet_pfcand_id, 4, 0.2]
+         - [jet_pfcand_id, 2, 0.2]
          - [jet_pfcand_hcalfraction, null]
          - [jet_pfcand_calofraction, null]
    pf_mask:
@@ -110,7 +110,7 @@ labels:
    ### [option 2] otherwise use `custom` to define the label, then `value` is a map 
    type: custom
    value: 
-      target_mass: np.clip(np.maximum(1,jet_mass_regression_truth)/np.maximum(1,jet_mass),0,10) 
+      target_mass: np.clip(np.maximum(1,jet_mass_regression_truth)/np.maximum(1,jet_mass),0,2) 
 
 observers:
    - event
@@ -129,6 +129,9 @@ observers:
    - jet_phf
    - jet_elf
    - jet_muf
+   - jet_softdrop_pt
+   - jet_softdrop_eta
+   - jet_softdrop_phi
    - jet_softdrop_mass
    - jet_regression_mass
    - jet_ncand
@@ -143,6 +146,17 @@ observers:
    - jet_genmatch_eta
    - jet_genmatch_phi
    - jet_genmatch_mass
+   - jet_genmatch_wnu_pt
+   - jet_genmatch_wnu_eta
+   - jet_genmatch_wnu_phi
+   - jet_genmatch_wnu_mass
+   - jet_genmatch_lep_pt
+   - jet_genmatch_lep_eta
+   - jet_genmatch_lep_phi
+   - jet_genmatch_lep_mass
+   - jet_softdrop_genmatch_pt
+   - jet_softdrop_genmatch_eta
+   - jet_softdrop_genmatch_phi
    - jet_softdrop_genmatch_mass
    - jet_pt_truth
    - jet_eta_truth
@@ -152,7 +166,6 @@ observers:
    - jet_eta_regression_truth
    - jet_phi_regression_truth
    - jet_mass_regression_truth
-   - jet_doublebtag
    - jet_pnet_probXbb
    - jet_pnet_probXcc
    - jet_pnet_probXqq
