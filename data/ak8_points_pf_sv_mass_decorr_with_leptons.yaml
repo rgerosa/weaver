@@ -168,6 +168,10 @@ observers:
    - jet_genmatch_lep_eta
    - jet_genmatch_lep_phi
    - jet_genmatch_lep_mass
+   - jet_genmatch_nu_pt
+   - jet_genmatch_nu_eta
+   - jet_genmatch_nu_phi
+   - jet_genmatch_nu_mass
    - jet_pnet_probXbb
    - jet_pnet_probXcc
    - jet_pnet_probXqq

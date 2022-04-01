@@ -154,6 +154,10 @@ observers:
    - jet_genmatch_lep_eta
    - jet_genmatch_lep_phi
    - jet_genmatch_lep_mass
+   - jet_genmatch_nu_pt
+   - jet_genmatch_nu_eta
+   - jet_genmatch_nu_phi
+   - jet_genmatch_nu_mass
    - jet_softdrop_genmatch_pt
    - jet_softdrop_genmatch_eta
    - jet_softdrop_genmatch_phi
