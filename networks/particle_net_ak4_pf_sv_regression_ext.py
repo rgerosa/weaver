@@ -22,7 +22,8 @@ def get_model(data_config, **kwargs):
 
     pf_features_dims = len(data_config.input_dicts['pf_features'])
     sv_features_dims = len(data_config.input_dicts['sv_features'])
-    num_classes = 1
+    num_classes = 0
+    num_targets = 1
     model = ParticleNetTagger(pf_features_dims, 
                               sv_features_dims, 
                               num_classes,

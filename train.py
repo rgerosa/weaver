@@ -275,7 +275,6 @@ def onnx(args, model, data_config, model_info):
     model.load_state_dict(torch.load(model_path, map_location='cpu'))
     model = model.cpu()
     model.eval()
-
     os.makedirs(os.path.dirname(args.export_onnx), exist_ok=True)
     inputs = tuple(
         torch.ones(model_info['input_shapes'][k], dtype=torch.float32) for k in model_info['input_names'])
@@ -285,11 +284,9 @@ def onnx(args, model, data_config, model_info):
                       dynamic_axes=model_info.get('dynamic_axes', None),
                       opset_version=13)
     _logger.info('ONNX model saved to %s', args.export_onnx)
-
     preprocessing_json = os.path.join(os.path.dirname(args.export_onnx), 'preprocess.json')
     data_config.export_json(preprocessing_json)
     _logger.info('Preprocessing parameters saved to %s', preprocessing_json)
-
 
 def flops(model, model_info):
     """

@@ -6,6 +6,7 @@ import torch.nn as nn
 
 
 def knn(x, k):
+
     inner = -2 * torch.matmul(x.transpose(2, 1), x)
     xx = torch.sum(x ** 2, dim=1, keepdim=True)
     pairwise_distance = -xx - inner - xx.transpose(2, 1)
@@ -34,7 +35,6 @@ def get_graph_feature_v2(x, k, idx):
 
     batch_size, num_dims, num_points = x.size()
     idx_base = torch.arange(0, batch_size, device=x.device).view(-1, 1, 1) * num_points
-
     idx = idx + idx_base
     idx = idx.view(-1)
 
@@ -136,6 +136,7 @@ class ParticleNet(nn.Module):
     def __init__(self,
                  input_dims,
                  num_classes,
+                 num_targets,
                  conv_params=[(7, (32, 32, 32)), (7, (64, 64, 64))],
                  fc_params=[(128, 0.1)],
                  use_fusion=True,
@@ -190,9 +191,9 @@ class ParticleNet(nn.Module):
                                          nn.Dropout(drop_rate)))
 
         if self.for_segmentation:
-            fcs.append(nn.Conv1d(fc_params[-1][0], num_classes, kernel_size=1))
+            fcs.append(nn.Conv1d(fc_params[-1][0], num_classes+num_targets, kernel_size=1))
         else:            
-            fcs.append(nn.Linear(fc_params[-1][0], num_classes))
+            fcs.append(nn.Linear(fc_params[-1][0], num_classes+num_targets))
 
         if self.use_attention:
             self.attention_pooling = nn.Sequential(
@@ -244,8 +245,12 @@ class ParticleNet(nn.Module):
         output = self.fc(x)
 
         if self.for_inference:
-            output = torch.softmax(output, dim=1)
-            #print('output:\n', output)
+            if num_targets == 0 and num_classes != 0:
+                output = torch.softmax(output,dim=1);
+            elif num_targets != and num_classes != 0:
+                output_class = torch.softmax(output[:,:num_classes-1],dim=1)
+                output_reg   = output[:,num_classes-1:num_classes+num_targets-1];
+                output = torch.cat((output_class,output_reg),dim=1);
         return output
 
 
@@ -269,7 +274,8 @@ class ParticleNetTagger(nn.Module):
     def __init__(self,
                  pf_features_dims,
                  sv_features_dims,
-                 num_classes,
+                 num_classes,                 
+                 num_targets,                 
                  conv_params=[(7, (32, 32, 32)), (7, (64, 64, 64))],
                  fc_params=[(128, 0.1)],
                  input_dims=32,
@@ -288,6 +294,7 @@ class ParticleNetTagger(nn.Module):
         self.sv_conv = FeatureConv(sv_features_dims, input_dims)
         self.pn = ParticleNet(input_dims=input_dims,
                               num_classes=num_classes,
+                              num_targets=num_targets,
                               conv_params=conv_params,
                               fc_params=fc_params,
                               use_fusion=use_fusion,

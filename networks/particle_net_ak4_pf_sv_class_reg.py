@@ -10,9 +10,12 @@ def get_model(data_config, **kwargs):
     point_features = 48;
     ## convoluational layers in EdgeConvBlock and kNN
     conv_params = [
-        (16, (192, 160, 128)),
-        (12, (224, 192, 160)),
-        (8,  (224, 192, 160)),
+        #(16, (192, 160, 128)),
+        #(12, (224, 192, 160)),
+        #(8,  (224, 192, 160)),
+        (16, (160, 128, 96)),
+        (12, (192, 160, 128)),
+        (8,  (192, 160, 128)),
         ]
     ## use fusion layer for edge-conv block
     use_fusion = True
@@ -28,10 +31,12 @@ def get_model(data_config, **kwargs):
     ## classes and features
     pf_features_dims = len(data_config.input_dicts['pf_features'])
     sv_features_dims = len(data_config.input_dicts['sv_features'])
-    num_classes = len(data_config.label_value)+len(data_config.target_value)
+    num_classes = len(data_config.label_value);
+    num_targets = len(data_config.target_value)
     model = ParticleNetTagger(pf_features_dims, 
                               sv_features_dims, 
                               num_classes,
+                              num_targets,
                               conv_params, 
                               fc_params,
                               input_dims=point_features, 
