@@ -113,7 +113,7 @@ targets:
     type: custom
     value:
        target_pt_vis : np.clip(((label_b) | (label_c) | (label_uds) | (label_g))*(jet_genmatch_pt/jet_pt)+((label_mu) | (label_el) | (label_tau_1h0p) | (label_tau_1h1or2p) | (label_tau_3h0p) | (label_tau_3h1p))*(jet_genmatch_lep_vis_pt/jet_pt),0,4)
-       target_pt_nu  : np.clip(((label_b) | (label_c) | (label_uds) | (label_g))*(jet_genmatch_nu_pt/jet_genmatch_pt) + ((label_mu) | (label_el) | (label_tau_1h0p) | (label_tau_1h1or2p) | (label_tau_3h0p) | (label_tau_3h1p))*(np.divide(jet_genmatch_nu_pt,jet_genmatch_lep_vis_pt,out=np.zeros_like(jet_genmatch_nu_pt),where=jet_genmatch_lep_vis_pt!=0)),0,4)
+       target_pt_nu  : np.clip(((label_b) | (label_c) | (label_uds) | (label_g))*(jet_genmatch_wnu_pt/jet_genmatch_pt) + ((label_mu) | (label_el) | (label_tau_1h0p) | (label_tau_1h1or2p) | (label_tau_3h0p) | (label_tau_3h1p))*(np.divide(jet_genmatch_lep_pt,jet_genmatch_lep_vis_pt,out=np.zeros_like(jet_genmatch_lep_pt),where=jet_genmatch_lep_vis_pt!=0)),0,4)
 
 observers:
    - event
