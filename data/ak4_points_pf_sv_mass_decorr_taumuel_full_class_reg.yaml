@@ -112,7 +112,7 @@ labels:
 targets:
     type: custom
     value:
-       target_pt : np.clip(jet_genmatch_wnu_pt/jet_pt,0,4)
+       target_pt : np.clip(((label_b) | (label_c) | (label_uds) | (label_g))*(jet_genmatch_wnu_pt/jet_pt)+((label_mu) | (label_el) | (label_tau_1h0p) | (label_tau_1h1or2p) | (label_tau_3h0p) | (label_tau_3h1p))*(jet_genmatch_lep_pt/jet_pt),0,4)
 
 observers:
    - event
