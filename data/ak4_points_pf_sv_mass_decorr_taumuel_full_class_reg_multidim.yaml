@@ -151,6 +151,10 @@ observers:
    - jet_genmatch_lep_eta
    - jet_genmatch_lep_phi
    - jet_genmatch_lep_mass
+   - jet_genmatch_lep_vis_pt
+   - jet_genmatch_lep_vis_eta
+   - jet_genmatch_lep_vis_phi
+   - jet_genmatch_lep_vis_mass
    - jet_deepcsv_probb
    - jet_deepcsv_probc
    - jet_deepcsv_probudsg
