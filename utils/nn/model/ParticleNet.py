@@ -250,8 +250,8 @@ class ParticleNet(nn.Module):
             if self.num_targets == 0 and self.num_classes != 0:
                 output = torch.softmax(output,dim=1);
             elif self.num_targets != 0 and self.num_classes != 0:
-                output_class = torch.softmax(output[:,:self.num_classes-1],dim=1)
-                output_reg   = output[:,self.num_classes-1:self.num_classes+self.num_targets-1];
+                output_class = torch.softmax(output[:,:self.num_classes],dim=1)
+                output_reg   = output[:,self.num_classes:self.num_classes+self.num_targets];
                 output = torch.cat((output_class,output_reg),dim=1);
         return output
 

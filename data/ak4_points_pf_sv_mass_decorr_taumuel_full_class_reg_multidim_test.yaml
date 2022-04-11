@@ -72,6 +72,7 @@ inputs:
          - [jet_pfcand_id, 2, 0.2]
          - [jet_pfcand_hcalfraction, null]
          - [jet_pfcand_calofraction, null]
+         - [jet_pfcand_tau_signal, null]
    pf_mask:
       length: 50
       vars:
@@ -148,6 +149,10 @@ observers:
    - jet_genmatch_lep_eta
    - jet_genmatch_lep_phi
    - jet_genmatch_lep_mass
+   - jet_genmatch_lep_vis_pt
+   - jet_genmatch_lep_vis_eta
+   - jet_genmatch_lep_vis_phi
+   - jet_genmatch_lep_vis_mass
    - jet_deepjet_probb
    - jet_deepjet_probc
    - jet_deepjet_probuds
