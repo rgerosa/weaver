@@ -147,6 +147,8 @@ class ParticleNet(nn.Module):
                  for_segmentation=False,
                  **kwargs):
         super(ParticleNet, self).__init__(**kwargs)
+        self.num_classes = num_classes;
+        self.num_targets = num_targets;
 
         self.use_fts_bn = use_fts_bn
         if self.use_fts_bn:
@@ -154,7 +156,7 @@ class ParticleNet(nn.Module):
 
         self.use_counts = use_counts
         self.use_attention = use_attention
-
+        
         self.edge_convs = nn.ModuleList()
         for idx, layer_param in enumerate(conv_params):
             k, channels = layer_param
@@ -245,11 +247,11 @@ class ParticleNet(nn.Module):
         output = self.fc(x)
 
         if self.for_inference:
-            if num_targets == 0 and num_classes != 0:
+            if self.num_targets == 0 and self.num_classes != 0:
                 output = torch.softmax(output,dim=1);
-            elif num_targets != 0 and num_classes != 0:
-                output_class = torch.softmax(output[:,:num_classes-1],dim=1)
-                output_reg   = output[:,num_classes-1:num_classes+num_targets-1];
+            elif self.num_targets != 0 and self.num_classes != 0:
+                output_class = torch.softmax(output[:,:self.num_classes-1],dim=1)
+                output_reg   = output[:,self.num_classes-1:self.num_classes+self.num_targets-1];
                 output = torch.cat((output_class,output_reg),dim=1);
         return output
 

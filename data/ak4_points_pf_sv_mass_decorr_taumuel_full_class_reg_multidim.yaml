@@ -121,17 +121,14 @@ targets:
 
 observers:
    - event
-   - rho
+   - npu
    - npv
    - wgt
-   - met
    - sample
-   - npu
    - jet_pt
    - jet_eta
    - jet_phi
    - jet_mass
-   - jet_ncand
    - jet_chf
    - jet_nhf
    - jet_elf
@@ -140,9 +137,9 @@ observers:
    - jet_hflav
    - jet_pflav
    - jet_tauflav
-   - jet_taudecaymode
    - jet_muflav
    - jet_elflav
+   - jet_taudecaymode
    - jet_genmatch_pt
    - jet_genmatch_eta
    - jet_genmatch_phi
@@ -159,9 +156,6 @@ observers:
    - jet_genmatch_lep_vis_eta
    - jet_genmatch_lep_vis_phi
    - jet_genmatch_lep_vis_mass
-   - jet_deepcsv_probb
-   - jet_deepcsv_probc
-   - jet_deepcsv_probudsg
    - jet_deepjet_probb
    - jet_deepjet_probc
    - jet_deepjet_probuds
@@ -182,12 +176,9 @@ observers:
    - jet_taumatch_dz
    - jet_taumatch_idjet_wpvvloose
    - jet_taumatch_idjet_wpvloose
-   - jet_taumatch_idjet_wploose
    - jet_taumatch_idele_wpvvloose
    - jet_taumatch_idele_wpvloose
-   - jet_taumatch_idele_wploose
    - jet_taumatch_idmu_wpvloose
-   - jet_taumatch_idmu_wploose
    - jet_mumatch_pt
    - jet_mumatch_eta
    - jet_mumatch_phi
@@ -195,7 +186,6 @@ observers:
    - jet_mumatch_dxy
    - jet_mumatch_dz
    - jet_mumatch_id
-   - jet_mumatch_iso
    - jet_elematch_pt
    - jet_elematch_eta
    - jet_elematch_phi
