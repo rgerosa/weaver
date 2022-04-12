@@ -29,12 +29,12 @@ preprocess:
 
 inputs:
    pf_points:
-      length: 120
+      length: 100
       vars:
          - [jet_pfcand_deta, null]
          - [jet_pfcand_dphi, null]
    pf_features:
-      length: 120
+      length: 100
       vars:
          ### [format 1]: var_name (no transformation)
          ### [format 2]: [var_name,
@@ -69,7 +69,7 @@ inputs:
          - [jet_pfcand_hcalfraction, null]
          - [jet_pfcand_calofraction, null]
    pf_mask:
-      length: 120
+      length: 100
       vars:
          - [pfcand_mask, null]
    sv_points:

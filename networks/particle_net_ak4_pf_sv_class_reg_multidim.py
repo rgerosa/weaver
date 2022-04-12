@@ -10,18 +10,19 @@ def get_model(data_config, **kwargs):
     point_features = 48;
     ## convoluational layers in EdgeConvBlock and kNN
     conv_params = [
-        (18, (256, 192, 128)),
-        (14, (256, 192, 160)),
-        (10, (256, 192, 160))
+        (20, (224, 192, 160)),
+        (16, (256, 224, 192)),
+        (12, (256, 224, 192))
         ]
     ## use fusion layer for edge-conv block
     use_fusion = True
     ## fully connected output layers
     fc_params = [
+        (256, 0.1),
         (192, 0.1),
         (160, 0.1),
         (128, 0.1),
-        (96, 0.1)
+        (96, 0.1),
     ]
 
     ## classes and features
