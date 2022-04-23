@@ -131,7 +131,7 @@ observers:
    - jet_pt
    - jet_eta
    - jet_phi
-   - jet_mass
+   - jet_energy
    - jet_chf
    - jet_nhf
    - jet_elf
@@ -146,19 +146,19 @@ observers:
    - jet_genmatch_pt
    - jet_genmatch_eta
    - jet_genmatch_phi
-   - jet_genmatch_mass
+   - jet_genmatch_energy
    - jet_genmatch_wnu_pt
    - jet_genmatch_wnu_eta
    - jet_genmatch_wnu_phi
-   - jet_genmatch_wnu_mass
+   - jet_genmatch_wnu_energy
    - jet_genmatch_lep_pt
    - jet_genmatch_lep_eta
    - jet_genmatch_lep_phi
-   - jet_genmatch_lep_mass
+   - jet_genmatch_lep_energy
    - jet_genmatch_lep_vis_pt
    - jet_genmatch_lep_vis_eta
    - jet_genmatch_lep_vis_phi
-   - jet_genmatch_lep_vis_mass
+   - jet_genmatch_lep_vis_energy
    - jet_deepjet_probb
    - jet_deepjet_probc
    - jet_deepjet_probuds
@@ -170,7 +170,7 @@ observers:
    - jet_taumatch_pt
    - jet_taumatch_eta
    - jet_taumatch_phi
-   - jet_taumatch_mass
+   - jet_taumatch_energy
    - jet_taumatch_decaymode
    - jet_taumatch_idjet
    - jet_taumatch_idmu
@@ -185,14 +185,14 @@ observers:
    - jet_mumatch_pt
    - jet_mumatch_eta
    - jet_mumatch_phi
-   - jet_mumatch_mass
+   - jet_mumatch_energy
    - jet_mumatch_dxy
    - jet_mumatch_dz
    - jet_mumatch_id
    - jet_elematch_pt
    - jet_elematch_eta
    - jet_elematch_phi
-   - jet_elematch_mass
+   - jet_elematch_energy
    - jet_elematch_dxy
    - jet_elematch_dz
    - jet_elematch_id
