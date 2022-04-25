@@ -150,10 +150,10 @@ observers:
    - jet_genmatch_wnu_eta
    - jet_genmatch_wnu_phi
    - jet_genmatch_wnu_mass
-   - jet_genmatch_lep_pt
-   - jet_genmatch_lep_eta
-   - jet_genmatch_lep_phi
-   - jet_genmatch_lep_mass
+#   - jet_genmatch_lep_pt
+#   - jet_genmatch_lep_eta
+#   - jet_genmatch_lep_phi
+#   - jet_genmatch_lep_mass
    - jet_genmatch_nu_pt
    - jet_genmatch_nu_eta
    - jet_genmatch_nu_phi
