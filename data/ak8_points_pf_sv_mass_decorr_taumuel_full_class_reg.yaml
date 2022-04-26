@@ -200,6 +200,6 @@ weights:
       jet_pt: [250, 315, 396, 499, 628, 791, 995, 1253, 1577, 1987, 2500]
       jet_mass_truth: [25, 45, 65, 85, 105, 125, 145, 165, 185, 205]
    reweight_classes: [label_H_tt, label_H_tm, label_H_te, label_H_mm, label_H_ee, label_H_bb, label_H_cc, label_H_qq, label_H_gg, label_QCD]
-   class_weights: [1.75, 2.75, 2.75, 1.5, 1.5, 3.0, 3,0, 3.0, 3.0, 3.0]
+   class_weights: [4.5, 7.5, 7.5, 3.0, 3.0, 6.0, 6.0, 6.0, 6.0, 6.0]
    reweight_threshold: 15
    reweight_hists:
