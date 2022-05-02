@@ -155,6 +155,10 @@ observers:
    - jet_eta_truth
    - jet_phi_truth
    - jet_mass_truth
+   - jet_pt_regression_truth
+   - jet_eta_regression_truth
+   - jet_phi_regression_truth
+   - jet_mass_regression_truth
    - jet_hflav
    - jet_pflav
    - jet_tauflav
