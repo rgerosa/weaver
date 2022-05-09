@@ -6,11 +6,18 @@ from utils.nn.model.ParticleNet import ParticleNetTagger
 
 def get_model(data_config, **kwargs):
     conv_params = [
-        (16, (64, 64, 64)),
-        (16, (128, 128, 128)),
-        (16, (256, 256, 256)),
+        (20, (256, 192, 128)),
+        (16, (256, 192, 128)),
+        (12, (256, 192, 128)),
         ]
-    fc_params = [(256, 0.1)]
+    fc_params = [
+        (256, 0.1),
+        (192, 0.1),
+        (160, 0.1),
+        (128, 0.1),
+        (96, 0.1),
+        (64, 0.1)
+    ]
     use_fusion = True
 
     pf_features_dims = len(data_config.input_dicts['pf_features'])
@@ -23,6 +30,7 @@ def get_model(data_config, **kwargs):
                               num_targets,
                               conv_params, 
                               fc_params,
+                              input_dims=48,
                               use_fusion=use_fusion,
                               use_fts_bn=kwargs.get('use_fts_bn', False),
                               use_counts=kwargs.get('use_counts', True),
