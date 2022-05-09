@@ -23,7 +23,7 @@ sudo docker build -t <name of the container> .
 sudo docker images
 sudo docker containers
 # Run container locally
-sudo docker -i -t <name of the container> /bin/bash
+sudo docker run -i -t <name of the container> /bin/bash
 ```
 
 * It is commonly good practise to store ``Docker`` images in github/gitlab repositories if your account has enough space. In this case you can upload to gitlab and then reclaim space on the local machine as follows:

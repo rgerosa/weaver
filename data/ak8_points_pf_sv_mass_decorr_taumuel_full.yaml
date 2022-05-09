@@ -4,38 +4,38 @@ selection:
    >-
    (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>=30) & (jet_mass_truth<=200) & (jet_genmatch_pt>0) & (event%7!=0) & 
    (((jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)) |
-    ((jet_flav_2prong_partonjet_match==2)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==2)) |
-    ((jet_flav_2prong_partonjet_match==3)  & (jet_tauflav==0) & (jet_muflav==2) & (jet_elflav==0)) |
-    ((jet_flav_2prong_partonjet_match>=4)  & (jet_flav_2prong_partonjet_match<=7) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)) |
-    ((jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==2) & (jet_muflav==0) & (jet_elflav==0)) |
-    ((jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==1) & (jet_muflav==1) & (jet_elflav==0)) |
-    ((jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==1) & (jet_muflav==0) & (jet_elflav==1)))
+    ((jet_flav_2prong_partonjet_match==1)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==2)) |
+    ((jet_flav_2prong_partonjet_match==2)  & (jet_tauflav==0) & (jet_muflav==2) & (jet_elflav==0)) |
+    ((jet_flav_2prong_partonjet_match>=2)  & (jet_flav_2prong_partonjet_match<=6) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)) |
+    ((jet_flav_2prong_partonjet_match==7)  & (jet_tauflav==2) & (jet_muflav==0) & (jet_elflav==0)) |
+    ((jet_flav_2prong_partonjet_match==7)  & (jet_tauflav==1) & (jet_muflav==1) & (jet_elflav==0)) |
+    ((jet_flav_2prong_partonjet_match==7)  & (jet_tauflav==1) & (jet_muflav==0) & (jet_elflav==1)))
 
 test_time_selection:
    >-
    (np.abs(jet_eta)<2.4) & (jet_pt>250) & (jet_pt<2500) & (jet_mass_truth>=30) & (jet_mass_truth<=200) & (jet_genmatch_pt>0) & (event%7==0) & 
    (((jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)) |
-    ((jet_flav_2prong_partonjet_match==2)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==2)) |
-    ((jet_flav_2prong_partonjet_match==3)  & (jet_tauflav==0) & (jet_muflav==2) & (jet_elflav==0)) |
-    ((jet_flav_2prong_partonjet_match>=4)  & (jet_flav_2prong_partonjet_match<=7) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)) |
-    ((jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==2) & (jet_muflav==0) & (jet_elflav==0)) |
-    ((jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==1) & (jet_muflav==1) & (jet_elflav==0)) |
-    ((jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==1) & (jet_muflav==0) & (jet_elflav==1)))
+    ((jet_flav_2prong_partonjet_match==1)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==2)) |
+    ((jet_flav_2prong_partonjet_match==2)  & (jet_tauflav==0) & (jet_muflav==2) & (jet_elflav==0)) |
+    ((jet_flav_2prong_partonjet_match>=3)  & (jet_flav_2prong_partonjet_match<=6) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)) |
+    ((jet_flav_2prong_partonjet_match==7)  & (jet_tauflav==2) & (jet_muflav==0) & (jet_elflav==0)) |
+    ((jet_flav_2prong_partonjet_match==7)  & (jet_tauflav==1) & (jet_muflav==1) & (jet_elflav==0)) |
+    ((jet_flav_2prong_partonjet_match==7)  & (jet_tauflav==1) & (jet_muflav==0) & (jet_elflav==1)))
 
 new_variables:
    ### [format] name: formula
    ### can use functions from `math`, `np` (numpy), and `awkward` in the expression
    pfcand_mask: awkward.JaggedArray.ones_like(jet_pfcand_deta)
    sv_mask: awkward.JaggedArray.ones_like(jet_sv_deta)
-   label_H_te: (jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==1) & (jet_muflav==0) & (jet_elflav==1)
-   label_H_tm: (jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==1) & (jet_muflav==1) & (jet_elflav==0)
-   label_H_tt: (jet_flav_2prong_partonjet_match==8)  & (jet_tauflav==2) & (jet_muflav==0) & (jet_elflav==0)
-   label_H_mm: (jet_flav_2prong_partonjet_match==3)  & (jet_tauflav==0) & (jet_muflav==2) & (jet_elflav==0)
-   label_H_ee: (jet_flav_2prong_partonjet_match==2)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==2)
-   label_H_bb: (jet_flav_2prong_partonjet_match==7)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
-   label_H_cc: (jet_flav_2prong_partonjet_match==6)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
-   label_H_qq: (jet_flav_2prong_partonjet_match==5)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
-   label_H_gg: (jet_flav_2prong_partonjet_match==4)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
+   label_H_te: (jet_flav_2prong_partonjet_match==7)  & (jet_tauflav==1) & (jet_muflav==0) & (jet_elflav==1)
+   label_H_tm: (jet_flav_2prong_partonjet_match==7)  & (jet_tauflav==1) & (jet_muflav==1) & (jet_elflav==0)
+   label_H_tt: (jet_flav_2prong_partonjet_match==7)  & (jet_tauflav==2) & (jet_muflav==0) & (jet_elflav==0)
+   label_H_mm: (jet_flav_2prong_partonjet_match==2)  & (jet_tauflav==0) & (jet_muflav==2) & (jet_elflav==0)
+   label_H_ee: (jet_flav_2prong_partonjet_match==1)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==2)
+   label_H_bb: (jet_flav_2prong_partonjet_match==6)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
+   label_H_cc: (jet_flav_2prong_partonjet_match==5)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
+   label_H_qq: (jet_flav_2prong_partonjet_match==4)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
+   label_H_gg: (jet_flav_2prong_partonjet_match==3)  & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
    label_QCD:  (jet_flav_2prong_partonjet_match==-1) & (jet_tauflav==0) & (jet_muflav==0) & (jet_elflav==0)
 
 preprocess:
@@ -61,31 +61,39 @@ inputs:
          ###              clip_max(optional, default=5),
          ###              pad_value(optional, default=0)]
          - [jet_pfcand_pt_log, 1, 0.5]
-         - [jet_pfcand_energy_log, 1.3, 0.5]
+         - [jet_pfcand_energy_log, 1, 0.5]
          - [jet_pfcand_deta, null]
          - [jet_pfcand_dphi, null]
          - [jet_pfcand_eta, 0, 0.8]
          - [jet_pfcand_charge, null]
-         - [jet_pfcand_frompv, 3, 1] # VTX_ass
+         - [jet_pfcand_frompv, 2, 1]
          - [jet_pfcand_nlostinnerhits, null]
-         - [jet_pfcand_track_chi2, 5, 0.2]
+         - [jet_pfcand_track_chi2, 1, 0.2]
          - [jet_pfcand_track_qual, 0, 0.2]
-         - [jet_pfcand_dz, 0, 150]
-         - [jet_pfcand_dzsig, 0, 0.7]
-         - [jet_pfcand_dxy, 0, 270]
-         - [jet_pfcand_dxysig, 1.0]
+         - [jet_pfcand_dz, 0, 0.1, -10, 10]
+         - [jet_pfcand_dzsig, 0, 0.01]
+         - [jet_pfcand_dxy, 0, 0.25, -25, 25]
+         - [jet_pfcand_dxysig, 0.01]
          - [jet_pfcand_etarel, 1.5, 0.5]
          - [jet_pfcand_pperp_ratio, 0, 1]
          - [jet_pfcand_ppara_ratio, 0, 1]
-         - [jet_pfcand_trackjet_d3d, 0, 90]
-         - [jet_pfcand_trackjet_d3dsig, 0, 0.5]
-         - [jet_pfcand_trackjet_dist, 0, 40]
-         - [jet_pfcand_trackjet_decayL, 0, 65]
+         - [jet_pfcand_trackjet_d3d, 0, 0.1]
+         - [jet_pfcand_trackjet_d3dsig, 0, 0.005]
+         - [jet_pfcand_trackjet_dist, 0, 0.1]
+         - [jet_pfcand_trackjet_decayL, 0, 0.01]
          - [jet_pfcand_npixhits, 0, 0.1]
          - [jet_pfcand_nstriphits, 0, 0.1]
          - [jet_pfcand_id, 2, 0.2]
-         - [jet_pfcand_hcalfraction, null]
-         - [jet_pfcand_calofraction, null]
+         - [jet_pfcand_hcalfraction, 0, 1, 0, 1]
+         - [jet_pfcand_calofraction, 0, 1, 0, 5]
+         - [jet_pfcand_muon_id, 0, 0.3]
+         - [jet_pfcand_electron_eOverP, 0, 0.5]
+         - [jet_pfcand_electron_detaIn, 0, 25]
+         - [jet_pfcand_electron_dphiIn, 0, 25]
+         - [jet_pfcand_electron_sigIetaIeta, 0.002, 50]
+         - [jet_pfcand_electron_r9, 0, 1, 0, 1]
+         - [jet_pfcand_electron_fbrem, 0, 1, 0, 1]
+         - [jet_pfcand_electron_convProb, null]
    pf_mask:
       length: 100
       vars:
@@ -98,14 +106,14 @@ inputs:
    sv_features:
       length: 10
       vars:
-         - [jet_sv_pt_log, 4, 0.6]
+         - [jet_sv_pt_log, 3, 0.6]
          - [jet_sv_mass, 1.2, 0.3]
          - [jet_sv_deta, null]
          - [jet_sv_dphi, null]
          - [jet_sv_eta, 0, 0.8]
          - [jet_sv_ntrack, 3, 1]
-         - [jet_sv_chi2, 0.8, 0.6]
-         - [jet_sv_dxy, 0.4, 0.25]
+         - [jet_sv_chi2, 1, 0.5]
+         - [jet_sv_dxy, 0.2, 0.25]
          - [jet_sv_dxysig, 7, 0.02]
          - [jet_sv_d3d, 0.5, 0.2]
          - [jet_sv_d3dsig, 7, 0.02]
@@ -136,37 +144,23 @@ observers:
    - jet_phi
    - jet_mass
    - jet_ncand
-   - jet_chf
-   - jet_nhf
-   - jet_phf
-   - jet_elf
-   - jet_muf
+   - jet_hflav
+   - jet_pflav
+   - jet_muflav
+   - jet_elflav
+   - jet_tauflav
+   - jet_taudecaymode
+   - jet_lepflav
+   - jet_nbhad
+   - jet_nchad
    - jet_softdrop_pt
    - jet_softdrop_eta
    - jet_softdrop_phi
    - jet_softdrop_mass
-   - jet_regression_mass
-   - jet_pt_truth
-   - jet_eta_truth
-   - jet_phi_truth
-   - jet_mass_truth
-   - jet_hflav
-   - jet_pflav
-   - jet_tauflav
-   - jet_muflav
-   - jet_elflav
-   - jet_genmatch_pt
-   - jet_genmatch_eta
-   - jet_genmatch_phi
-   - jet_genmatch_mass
    - jet_genmatch_wnu_pt
    - jet_genmatch_wnu_eta
    - jet_genmatch_wnu_phi
    - jet_genmatch_wnu_mass
-#   - jet_genmatch_lep_pt
-#   - jet_genmatch_lep_eta
-#   - jet_genmatch_lep_phi
-#   - jet_genmatch_lep_mass
    - jet_genmatch_nu_pt
    - jet_genmatch_nu_eta
    - jet_genmatch_nu_phi
@@ -175,10 +169,34 @@ observers:
    - jet_softdrop_genmatch_eta
    - jet_softdrop_genmatch_phi
    - jet_softdrop_genmatch_mass
-   - jet_pnet_probXbb
-   - jet_pnet_probXcc
-   - jet_pnet_probXqq
-   - jet_pnet_probQCD
+   - jet_pt_truth
+   - jet_eta_truth
+   - jet_phi_truth
+   - jet_mass_truth
+   - jet_pt_regression_truth
+   - jet_eta_regression_truth
+   - jet_phi_regression_truth
+   - jet_mass_regression_truth
+   - jet_pnet_probHbb
+   - jet_pnet_probHcc
+   - jet_pnet_probHqq
+   - jet_pnet_probQCDbb
+   - jet_pnet_probQCDb
+   - jet_pnet_probQCDcc
+   - jet_pnet_probQCDc
+   - jet_pnet_probQCDothers
+   - jet_pnet_regmass
+   - jet_pnetlast_probHbb
+   - jet_pnetlast_probHcc
+   - jet_pnetlast_probHqq
+   - jet_pnetlast_probHgg
+   - jet_pnetlast_probQCD
+   - jet_pnetlast_probHmm
+   - jet_pnetlast_probHee
+   - jet_pnetlast_probHtt
+   - jet_pnetlast_probHtm
+   - jet_pnetlast_probHte
+   - jet_pnetlast_masscorr
    - jet_flav_2prong_partonjet_match
    - jet_flav_2prong_parton_match
 
